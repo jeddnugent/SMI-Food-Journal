@@ -1,0 +1,83 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+form{
+  display: block;
+}
+
+.journalForm {
+  display: block;
+  /* grid-template-columns: 300px 300px; */
+  margin: auto;
+  width: 30%;
+  padding: 10px;
+  border-radius: 5%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.entryLabel{
+  font-weight: bold;
+  padding: 8px;
+}
+
+.textArea{
+  font-weight: bold;
+}
+
+
+.JornalDisplay {
+  background: #18cc78;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px #ccc;
+  padding: 10px;
+  width: 400px;
+  margin: 16px;
+  float: left;
+}
+.JornalDisplay table {
+  font-size: 1.1em;
+  margin-bottom: 6px;
+}
+.JornalDisplay td {
+  font-size: 1.1em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
