@@ -1,9 +1,10 @@
 # SMI-Food-Journal
 
 SMI Food Journal is a full stack project created for [Successful Minds Institute](https://successfulminds.com.au). 
-The purpose of the journal is to allow clients of SMI to track each meal they eat over the course of the week where they will
-answer a series of prompts regarding their mood and the enviroment around the meal that inform the practitioners on how to best help
-their growth in a holistic sense.
+The purpose of the journal is to allow clients of SMI to track each meal they eat over the course of a week where they will
+answer a series of prompts regarding their mood and the enviroment around the meal which then will be accessed by practitioners on a subsequent consultation.
+The information gained by these surveys will then help inform futher advice and treatment for the client and allow practitioners to best help
+their growth through holistic means.
 
 ##### Tech Stack
 - React (TypeScript) Web App frontend
