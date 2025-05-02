@@ -6,10 +6,9 @@ answer a series of prompts regarding their mood and the enviroment around the me
 their growth in a holistic sense.
 
 ##### Tech Stack
-React (TypeScript) Web App frontend
-Express.js Backend API Client
-PostgreSQL Database backend
-
+- React (TypeScript) Web App frontend
+- Express.js Backend API Client
+- PostgreSQL Database backend
 
 
 ##### LocalHost Deployment
