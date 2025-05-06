@@ -1,4 +1,4 @@
-export default interface Entry{
+interface Entry{
   user: string;
 	id: number;
 	itemDate: string;
@@ -11,5 +11,7 @@ export default interface Entry{
 	selfTalk: string;
 	otherComment: string;
 };
+
+export default Entry;
 
 
