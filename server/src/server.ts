@@ -1,4 +1,6 @@
 import express, { Request, Response } from 'express';
+import Entry from './interfaces/Entry';
+import testEntries from './test/data';
 
 const app = express();
 const PORT = 5000;
