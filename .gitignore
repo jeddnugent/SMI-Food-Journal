@@ -37,7 +37,7 @@ Thumbs.db          # Windows
 # Create React App build directory
 /build/
 
-# TypeScript cache (optional)
+# TypeScript cache
 /.tscache/
 
 # Local npm package cache
