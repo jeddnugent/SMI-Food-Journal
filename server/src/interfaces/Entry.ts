@@ -1,5 +1,6 @@
 export default interface Entry{
-  id: number;
+  user: string;
+	id: number;
 	itemDate: string;
 	timeConsumed: string;
 	itemDesc: string;

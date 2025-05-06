@@ -2,6 +2,7 @@ import Entry from "../interfaces/Entry";
 
 var testEntries: Array<Entry> = [
 	{
+		user: "jedd",
 		id: 1,
 		itemDate: "2020-12-2",
 		timeConsumed: "15:43",
@@ -14,6 +15,7 @@ var testEntries: Array<Entry> = [
 		otherComment: "I got extra pickles",
 	},
 	{
+		user: "jedd",
 		id: 2,
 		itemDate: "2024-6-2",
 		timeConsumed: "4:43",
@@ -26,7 +28,21 @@ var testEntries: Array<Entry> = [
 		otherComment: "Honey glaze on the ham",
 	},
 	{
+		user: "jedd",
 		id: 3,
+		itemDate: "2024-12-2",
+		timeConsumed: "7:43",
+		itemDesc: "15 raw cellery sticks",
+		consumedLocation: "In the dark in my Kitchen",
+		consumptionCompany: "With my wife, also in the dark",
+		feelingPrior: "glorious, free, ready",
+		feelingPost: "satisfied, fixed, whole",
+		selfTalk: "I am god incarnate",
+		otherComment: "the crunch was amazing",
+	},
+	{
+		user: "craig",
+		id: 1,
 		itemDate: "2024-12-2",
 		timeConsumed: "7:43",
 		itemDesc: "15 raw cellery sticks",
