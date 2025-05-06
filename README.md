@@ -7,8 +7,8 @@ The information gained by these surveys will then help inform futher advice and 
 This information allows practitioners to best help their journies through hypnotic laparoscopic banding.
 
 ##### Tech Stack
-- [React (TypeScript) Web App frontend](https://github.com/jeddnugent/SMI-Food-Journal/server)
-- [Express.js API Client Backend](https://github.com/jeddnugent/SMI-Food-Journal/server)
+- [React (TypeScript) Web App frontend](https://github.com/jeddnugent/SMI-Food-Journal/tree/main/client)
+- [Express.js API Client Backend](https://github.com/jeddnugent/SMI-Food-Journal/tree/main/server)
 - PostgreSQL Database backend
 
 
