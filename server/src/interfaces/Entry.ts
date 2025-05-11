@@ -1,6 +1,6 @@
-interface Entry{
-  user: string;
+interface Entry {
 	id: number;
+	createdBy: number;
 	itemDate: string;
 	timeConsumed: string;
 	itemDesc: string;
