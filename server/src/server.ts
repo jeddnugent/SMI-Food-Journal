@@ -1,30 +1,43 @@
 import express, { Request, Response, NextFunction } from "express";
+import pg from 'pg';
 import Entry from './interfaces/Entry';
+import dotnev from "dotenv";
 
 //TODO: Replace test data with SQL backend
 //TODO: Adapt code with express routes
 //TODO: Create services file for buisness logic and to tap into SQL
 //TODO: possibly change interfaces to modles, need to check style guides for file structure hiracrchy
-//TODO: Add .env file for Server side secrets
 //TODO: Add in proper Auth
 
 import testEntries from './test/data';
 
+// Add dynamic env assignment
+dotnev.config({
+  path: `.env.development`
+});
+
+const db = new pg.Client({
+  user: process.env.DATABASE_USER,
+  host: process.env.DATABASE_HOST,
+  database: process.env.DATABASE,
+  password: process.env.DATABASE_PASSWORD,
+  port: process.env.DATABASE_PORT ? parseInt(process.env.DATABASE_PORT) : 5432,
+});
+
+db.connect();
+
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello from TypeScript Express!');
-});
-
 //GET an entry of a specific ID
-app.get("/entry/:user/:id", (req: Request, res: Response) => {
+app.get("/entry/:userId/:id", async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
-  const user: string = req.params.user;
-  const foundEntry = testEntries.find((entry) => entry.id === id && entry.user === user);
+  const userId: number = parseInt(req.params.userId);
+  const result = await db.query("SELECT * FROM entrys WHERE id = $1 AND userId = $2", [id, userId]);
+  const foundEntry: Entry[] = result.rows;
 
   if (!foundEntry) {
     res.status(404).json({ error: "Entry not found" });
@@ -35,31 +48,25 @@ app.get("/entry/:user/:id", (req: Request, res: Response) => {
 });
 
 //GET all entries for a user
-app.get("/entry/:user", (req: Request, res: Response) => {
-  const user: string = req.params.user;
-  const foundEntries: Entry[] = testEntries.filter((entry) => entry.user === user);
-
-  if (foundEntries.length < -1) {
-    res.status(404).json({ error: "Entries not found" });
-    return;
+app.get("/entry/:userId", async (req: Request, res: Response) => {
+  const userId: number = parseInt(req.params.userId);
+  try {
+    const result = await db.query("SELECT * FROM entrys WHERE userId = $1", [userId]);
+    const foundEntries: Entry[] = result.rows;
+    if (foundEntries.length < -1) {
+      res.status(404).json({ error: "This user has no entrys recorded" });
+      return;
+    }
+    res.json(foundEntries);
+  } catch (error) {
+    console.log(error);
   }
-
-  res.json(foundEntries);
-
-
-  if (testEntries.length < -1) {
-    res.status(404).json({ error: "Entry not found" });
-    return;
-  }
-
-  res.json(testEntries);
 });
 
 // POST New Entry
-app.post("/entry", (req: Request, res: Response) => {
-  const id: number = parseInt(req.body.id);
+app.post("/entry", async (req: Request, res: Response) => {
+  const userId: number = parseInt(req.body.userId);
   const {
-    user,
     itemDate,
     timeConsumed,
     itemDesc,
@@ -72,33 +79,19 @@ app.post("/entry", (req: Request, res: Response) => {
 
   //TODO: Add validation for new user
 
-  const newEntry: Entry = {
-    user,
-    id,
-    itemDate,
-    timeConsumed,
-    itemDesc,
-    consumedLocation,
-    consumptionCompany,
-    feelingPrior,
-    feelingPost,
-    selfTalk,
-    otherComment,
-  };
-
-  testEntries.push(newEntry);
-
-  console.log(newEntry);
-  res.sendStatus(200);
-
+  try {
+    await db.query("INSERT INTO entrys (title) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+      [userId, itemDate, timeConsumed, itemDesc, consumedLocation, consumptionCompany, feelingPrior, feelingPost, selfTalk, otherComment]);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 //PATCH Update Entry
-app.patch("/entry/:user/:id", (req: Request, res: Response) => {
+app.patch("/entry/:userId/:id", (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
-  const user: string = req.params.user;
-  const exsistingEntry = testEntries.find((entry) => entry.id === id && entry.user === user);
-
+  const userId: string = req.params.userId;
   const {
     itemDate,
     timeConsumed,
@@ -108,8 +101,10 @@ app.patch("/entry/:user/:id", (req: Request, res: Response) => {
     feelingPrior,
     feelingPost,
     selfTalk,
-    otherComment } = req.body;
+    otherComment 
+  } = req.body;
 
+  
   //TODO: Add Validation
 
   if (!exsistingEntry) {
@@ -118,8 +113,8 @@ app.patch("/entry/:user/:id", (req: Request, res: Response) => {
   }
 
   const updatedEntry: Entry = {
-    user,
     id,
+    createdBy,
     itemDate: itemDate || exsistingEntry.itemDate,
     timeConsumed: timeConsumed || exsistingEntry.timeConsumed,
     itemDesc: itemDesc || exsistingEntry.itemDesc,
