@@ -33,15 +33,19 @@ app.use(express.json());
 app.get("/entry/:userId/:id", async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
   const userId: string = req.params.userId;
-  const result = await db.query("SELECT * FROM entrys WHERE id = $1 AND user_id = $2", [id, userId]);
-  const foundEntry: Entry[] = result.rows;
+  try {
+    const result = await db.query("SELECT * FROM entrys WHERE id = $1 AND user_id = $2", [id, userId]);
+    const foundEntry: Entry[] = result.rows;
 
-  if (!foundEntry) {
-    res.status(404).json({ error: "Entry not found" });
-    return;
+    if (foundEntry.length === 0) {
+      res.status(404).json({ error: "Entry not found" });
+      return;
+    }
+
+    res.json(foundEntry);
+  } catch (error) {
+    console.log(error);
   }
-
-  res.json(foundEntry);
 });
 
 //GET all entries for a user
@@ -115,7 +119,7 @@ app.put("/entry/:userId/:id", async (req: Request, res: Response) => {
 app.delete("/entry/:userId/:id", async (req: Request, res: Response) => {
   const userId: string = req.params.user;
   const id: number = parseInt(req.params.id);
-;
+  ;
   try {
     await db.query("DELETE FROM entrys WHERE user_id = $1 AND id = $2", [userId, id]);
   } catch (error) {
