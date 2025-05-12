@@ -23,6 +23,6 @@ INSERT INTO entrys (
  'With my wife, also in the dark', 'glorious, free, ready', 'satisfied, fixed, whole',
  'I am god incarnate', 'the crunch was amazing'),
 
-('22222222-2222-2222-2222-222222222222', '2024-12-02', '07:43', '15 raw cellery sticks', 'In the dark in my Kitchen',
- 'With my wife, also in the dark', 'glorious, free, ready', 'satisfied, fixed, whole',
- 'I am god incarnate', 'the crunch was amazing');
+('22222222-2222-2222-2222-222222222222', '2020-12-15', '09:48', '12 dino chicken nuggets', 'On my driveway',
+ 'With my 5 year old', 'glorious, freeing, liberating', 'satisfied, healed, a new man',
+ 'One day I yearn to be a dino, not nugget', 'why can all food not be dino shaped?');
