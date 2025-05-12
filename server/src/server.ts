@@ -44,7 +44,13 @@ app.get("/entry/:userId/:id", async (req: Request, res: Response) => {
 
     res.json(foundEntry);
   } catch (error) {
-    console.log(error);
+    if (error instanceof Error) {
+      console.error('Database Error:', error.message);
+      res.status(400).json({ error: error.message });
+    } else {
+      console.error('Unexpected error type:', error);
+      res.status(500).json({ error: 'An unexpected error occurred' });
+    }
   }
 });
 
@@ -60,7 +66,13 @@ app.get("/entry/:userId", async (req: Request, res: Response) => {
     }
     res.json(foundEntries);
   } catch (error) {
-    console.log(error);
+    if (error instanceof Error) {
+      console.error('Database Error:', error.message);
+      res.status(400).json({ error: error.message });
+    } else {
+      console.error('Unexpected error type:', error);
+      res.status(500).json({ error: 'An unexpected error occurred' });
+    }
   }
 });
 
@@ -85,7 +97,13 @@ app.post("/entry", async (req: Request, res: Response) => {
       [userId, itemDate, timeConsumed, itemDesc, consumedLocation, consumptionCompany, feelingPrior, feelingPost, selfTalk, otherComment]);
     res.sendStatus(200);
   } catch (error) {
-    console.log(error);
+    if (error instanceof Error) {
+      console.error('Database Error:', error.message);
+      res.status(400).json({ error: error.message });
+    } else {
+      console.error('Unexpected error type:', error);
+      res.status(500).json({ error: 'An unexpected error occurred' });
+    }
   }
 });
 
@@ -110,8 +128,13 @@ app.put("/entry/:userId/:id", async (req: Request, res: Response) => {
       ("UPDATE entrys SET item_date = $3, time_consumed = $4, item_desc = $5, consumed_location = $6, consumption_company = $7, feeling_prior = $8, feeling_post = $9, self_talk = $10, other_comment = $11 WHERE user_id = $1 AND id = $2",
         [userId, id, itemDate, timeConsumed, itemDesc, consumedLocation, consumptionCompany, feelingPrior, feelingPost, selfTalk, otherComment]);
   } catch (error) {
-    console.log(error);
-    res.status(404).json({ error: "Entry not found" });
+    if (error instanceof Error) {
+      console.error('Database Error:', error.message);
+      res.status(400).json({ error: error.message });
+    } else {
+      console.error('Unexpected error type:', error);
+      res.status(500).json({ error: 'An unexpected error occurred' });
+    }
   }
 });
 
@@ -122,8 +145,14 @@ app.delete("/entry/:userId/:id", async (req: Request, res: Response) => {
   ;
   try {
     await db.query("DELETE FROM entrys WHERE user_id = $1 AND id = $2", [userId, id]);
-  } catch (error) {
-    console.log(error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('Database Error:', error.message);
+      res.status(400).json({ error: error.message });
+    } else {
+      console.error('Unexpected error type:', error);
+      res.status(500).json({ error: 'An unexpected error occurred' });
+    }
   }
 });
 
