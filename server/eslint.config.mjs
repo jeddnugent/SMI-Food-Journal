@@ -17,7 +17,6 @@ export default defineConfig([
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
 
-  // 🔧 Add custom rules here:
   tseslint.config({
     rules: {
       "no-unused-vars": "off",
