@@ -1,5 +1,5 @@
 interface Entry {
-	user_id: number;
+	userId: number;
 	itemDate: string;
 	timeConsumed: string;
 	itemDesc: string;

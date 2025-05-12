@@ -8,7 +8,7 @@ CREATE TABLE "users" (
 
 CREATE TABLE "entrys" (
   "id" SERIAL NOT NULL,
-  "user_id" UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  "userId" UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   "itemDate" DATE NOT NULL,
   "timeConsumed" TIME NOT NULL,
   "itemDesc" TEXT NOT NULL,
@@ -18,5 +18,5 @@ CREATE TABLE "entrys" (
   "feelingPost" TEXT NOT NULL,
   "selfTalk" TEXT NOT NULL,
   "otherComment" TEXT,
-  PRIMARY KEY (user_id, id)
+  PRIMARY KEY (userId, id)
 );
