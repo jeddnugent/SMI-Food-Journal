@@ -1,4 +1,4 @@
-# **SMI-Food-Journal**
+# **SMI Food Journal**
 
 SMI Food Journal is a full stack project created for [Successful Minds Institute](https://successfulminds.com.au). 
 The purpose of the journal is to allow clients of SMI to track each meal they eat over the course of a week where they will
