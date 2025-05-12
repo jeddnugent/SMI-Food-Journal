@@ -1,12 +1,14 @@
 CREATE TABLE "users" (
-  "userId" serial PRIMARY KEY,
-  "username" text UNIQUE NOT NULL,
+  "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  "fName" TEXT NOT NULL,
+  "lName" TEXT NOT NULL,
+  "email" TEXT NOT NULL UNIQUE,
   "password" text NOT NULL
 );
 
 CREATE TABLE "entrys" (
-  "id" serial PRIMARY KEY,
-  "createdBy" integer NOT NULL,
+  "id" SERIAL NOT NULL,
+  "user_id" UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   "itemDate" date NOT NULL,
   "timeConsumed" time NOT NULL,
   "itemDesc" text NOT NULL,
@@ -15,7 +17,6 @@ CREATE TABLE "entrys" (
   "feelingPrior" text NOT NULL,
   "feelingPost" text NOT NULL,
   "selfTalk" text NOT NULL,
-  "otherComment" text
+  "otherComment" text,
+  PRIMARY KEY (user_id, id)
 );
-
-ALTER TABLE "entrys" ADD CONSTRAINT "user_entries" FOREIGN KEY ("createdBy") REFERENCES "users" ("userId");
