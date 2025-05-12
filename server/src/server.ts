@@ -3,13 +3,10 @@ import pg from 'pg';
 import Entry from './interfaces/Entry';
 import dotnev from "dotenv";
 
-//TODO: Replace test data with SQL backend
 //TODO: Adapt code with express routes
 //TODO: Create services file for buisness logic and to tap into SQL
 //TODO: possibly change interfaces to modles, need to check style guides for file structure hiracrchy
 //TODO: Add in proper Auth
-
-import testEntries from './test/data';
 
 // Add dynamic env assignment
 dotnev.config({
@@ -36,7 +33,7 @@ app.use(express.json());
 app.get("/entry/:userId/:id", async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
   const userId: number = parseInt(req.params.userId);
-  const result = await db.query("SELECT * FROM entrys WHERE id = $1 AND userId = $2", [id, userId]);
+  const result = await db.query("SELECT * FROM entrys WHERE id = $1 AND user_id = $2", [id, userId]);
   const foundEntry: Entry[] = result.rows;
 
   if (!foundEntry) {
@@ -51,7 +48,7 @@ app.get("/entry/:userId/:id", async (req: Request, res: Response) => {
 app.get("/entry/:userId", async (req: Request, res: Response) => {
   const userId: number = parseInt(req.params.userId);
   try {
-    const result = await db.query("SELECT * FROM entrys WHERE userId = $1", [userId]);
+    const result = await db.query("SELECT * FROM entrys WHERE user_id = $1", [userId]);
     const foundEntries: Entry[] = result.rows;
     if (foundEntries.length < -1) {
       res.status(404).json({ error: "This user has no entrys recorded" });
@@ -80,7 +77,7 @@ app.post("/entry", async (req: Request, res: Response) => {
   //TODO: Add validation for new user
 
   try {
-    await db.query("INSERT INTO entrys (title) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+    await db.query("INSERT INTO entrys (user_id, item_date, time_consumed, item_desc, consumed_location, consumption_company, feeling_prior, feeling_post, self_talk, other_comment) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
       [userId, itemDate, timeConsumed, itemDesc, consumedLocation, consumptionCompany, feelingPrior, feelingPost, selfTalk, otherComment]);
     res.sendStatus(200);
   } catch (error) {
@@ -89,7 +86,7 @@ app.post("/entry", async (req: Request, res: Response) => {
 });
 
 //PATCH Update Entry
-app.patch("/entry/:userId/:id", (req: Request, res: Response) => {
+app.put("/entry/:userId/:id", async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
   const userId: string = req.params.userId;
   const {
@@ -101,52 +98,28 @@ app.patch("/entry/:userId/:id", (req: Request, res: Response) => {
     feelingPrior,
     feelingPost,
     selfTalk,
-    otherComment 
+    otherComment
   } = req.body;
 
-  
-  //TODO: Add Validation
-
-  if (!exsistingEntry) {
+  try {
+    await db.query
+      ("UPDATE entrys SET item_date = $3, time_consumed = $4, item_desc = $5, consumed_location = $6, consumption_company = $7, feeling_prior = $8, feeling_post = $9, self_talk = $10, other_comment = $11 WHERE user_id = $1 AND id = $2",
+        [userId, id, itemDate, timeConsumed, itemDesc, consumedLocation, consumptionCompany, feelingPrior, feelingPost, selfTalk, otherComment]);
+  } catch (error) {
+    console.log(error);
     res.status(404).json({ error: "Entry not found" });
-    return;
   }
-
-  const updatedEntry: Entry = {
-    id,
-    createdBy,
-    itemDate: itemDate || exsistingEntry.itemDate,
-    timeConsumed: timeConsumed || exsistingEntry.timeConsumed,
-    itemDesc: itemDesc || exsistingEntry.itemDesc,
-    consumedLocation: consumedLocation || exsistingEntry.consumedLocation,
-    consumptionCompany: consumptionCompany || exsistingEntry.consumptionCompany,
-    feelingPrior: feelingPrior || exsistingEntry.feelingPrior,
-    feelingPost: feelingPost || exsistingEntry.feelingPost,
-    selfTalk: selfTalk || exsistingEntry.selfTalk,
-    otherComment: otherComment || exsistingEntry.otherComment,
-  };
-
-  //TODO: Move this logic
-  const searchId = testEntries.findIndex(entry => entry.id === id);
-  testEntries[searchId] = updatedEntry;
-
-  res.json(updatedEntry);
 });
 
 //DELETE Specifc Entry
-app.delete("/entry/:user/:id", (req: Request, res: Response) => {
-  const user: string = req.params.user;
+app.delete("/entry/:userId/:id", async (req: Request, res: Response) => {
+  const userId: string = req.params.user;
   const id: number = parseInt(req.params.id);
-
-  //TODO: Replace with SQL logic
-  const deletedIndex = testEntries.findIndex((entry) => entry.id === id && entry.user === user);
-  if (deletedIndex > -1) {
-    const deletedJoke = testEntries.find((entry) => entry.id === id && entry.user === user);
-    testEntries.splice(deletedIndex, 1);
-    res.status(200).json(deletedJoke);
-  }
-  else {
-    res.status(404).json("Entry at this index could not be found");
+;
+  try {
+    await db.query("DELETE FROM entrys WHERE user_id = $1 AND id = $2", [userId, id]);
+  } catch (error) {
+    console.log(error);
   }
 });
 
