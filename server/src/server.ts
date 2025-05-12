@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import pg from 'pg';
 import Entry from './interfaces/Entry';
 import dotnev from "dotenv";
-
+import cors from 'cors';  
 //TODO: Adapt code with express routes
 //TODO: Create services file for buisness logic and to tap into SQL
 //TODO: possibly change interfaces to modles, need to check style guides for file structure hiracrchy
@@ -25,6 +25,10 @@ db.connect();
 
 const app = express();
 const PORT = process.env.PORT;
+
+app.use(cors({
+  origin: 'http://localhost:3000'  // Allow only localhost:3000
+}));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -77,8 +81,8 @@ app.get("/entry/:userId", async (req: Request, res: Response) => {
 });
 
 // POST New Entry
-app.post("/entry", async (req: Request, res: Response) => {
-  const userId: string = req.body.userId;
+app.post("/entry/:userId", async (req: Request, res: Response) => {
+  const userId: string = req.params.userId;
   const {
     itemDate,
     timeConsumed,
