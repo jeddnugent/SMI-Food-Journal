@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import "../styles/App.css"
-import Header from './Header';
-import NewEntryForm from './NewEntryForm';
-import JournalEntryDisplayBlock from './JournalEntryDisplayBlock';
+import Header from '../components/Header';
+import NewEntryForm from '../components/NewEntryForm';
+import JournalEntryDisplayBlock from '../components/JournalEntryDisplayBlock';
 
 function App() {
 
