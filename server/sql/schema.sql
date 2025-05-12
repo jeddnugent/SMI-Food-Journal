@@ -9,14 +9,14 @@ CREATE TABLE "users" (
 CREATE TABLE "entrys" (
   "id" SERIAL NOT NULL,
   "user_id" UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  "itemDate" date NOT NULL,
-  "timeConsumed" time NOT NULL,
-  "itemDesc" text NOT NULL,
-  "consumedLocation" text NOT NULL,
-  "consumptionCompany" text NOT NULL,
-  "feelingPrior" text NOT NULL,
-  "feelingPost" text NOT NULL,
-  "selfTalk" text NOT NULL,
-  "otherComment" text,
+  "itemDate" DATE NOT NULL,
+  "timeConsumed" TIME NOT NULL,
+  "itemDesc" TEXT NOT NULL,
+  "consumedLocation" TEXT NOT NULL,
+  "consumptionCompany" TEXT NOT NULL,
+  "feelingPrior" TEXT NOT NULL,
+  "feelingPost" TEXT NOT NULL,
+  "selfTalk" TEXT NOT NULL,
+  "otherComment" TEXT,
   PRIMARY KEY (user_id, id)
 );

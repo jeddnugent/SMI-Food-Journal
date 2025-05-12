@@ -1,6 +1,5 @@
 interface Entry {
-	id: number;
-	createdBy: number;
+	user_id: number;
 	itemDate: string;
 	timeConsumed: string;
 	itemDesc: string;
