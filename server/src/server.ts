@@ -32,7 +32,7 @@ app.use(express.json());
 //GET an entry of a specific ID
 app.get("/entry/:userId/:id", async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
-  const userId: number = parseInt(req.params.userId);
+  const userId: string = req.params.userId;
   const result = await db.query("SELECT * FROM entrys WHERE id = $1 AND user_id = $2", [id, userId]);
   const foundEntry: Entry[] = result.rows;
 
@@ -46,7 +46,7 @@ app.get("/entry/:userId/:id", async (req: Request, res: Response) => {
 
 //GET all entries for a user
 app.get("/entry/:userId", async (req: Request, res: Response) => {
-  const userId: number = parseInt(req.params.userId);
+  const userId: string = req.params.userId;
   try {
     const result = await db.query("SELECT * FROM entrys WHERE user_id = $1", [userId]);
     const foundEntries: Entry[] = result.rows;
@@ -62,7 +62,7 @@ app.get("/entry/:userId", async (req: Request, res: Response) => {
 
 // POST New Entry
 app.post("/entry", async (req: Request, res: Response) => {
-  const userId: number = parseInt(req.body.userId);
+  const userId: string = req.body.userId;
   const {
     itemDate,
     timeConsumed,
