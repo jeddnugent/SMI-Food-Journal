@@ -9,7 +9,7 @@ This information allows practitioners to best help their journies through hypnot
 ##### Tech Stack
 - [React (TypeScript) Web App frontend](https://github.com/jeddnugent/SMI-Food-Journal/tree/main/client)
 - [Express.js API Client Backend](https://github.com/jeddnugent/SMI-Food-Journal/tree/main/server)
-- PostgreSQL Database backend
+- [PostgreSQL Database backend](https://github.com/jeddnugent/SMI-Food-Journal/tree/main/server/sql)
 
 
 ##### LocalHost Deployment
