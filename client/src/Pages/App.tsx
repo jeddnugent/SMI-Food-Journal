@@ -3,7 +3,7 @@ import "../styles/App.css"
 import Header from '../components/Header';
 import NewEntryForm from '../components/NewEntryForm';
 import JournalEntryDisplayBlock from '../components/JournalEntryDisplayBlock';
-import { getAllUserEntrys } from '../api/entrys';
+import { getAllUserEntrys, postNewEntry } from '../api/entrys';
 import Entry from '../interfaces/Entry';
 
 function App() {
@@ -21,21 +21,32 @@ function App() {
 				setJournalEntrys(userData);
 			}
 		} catch (error) {
-			console.error('API Error:', error);
+			console.error('API fetchAllUserData Error:', error);
 		}
 	}
 
 	useEffect(() => {
+		//TODO: Replace USERID with current user data
 		fetchAllUserData(USERID);
 	}, []);
 
-	function addEntry(newEntry: Entry) {
-		setJournalEntrys(prevEntries => {
-			return [...prevEntries, newEntry]
-		})
+	async function addEntry(newEntry: Entry) {
+		//TODO: Replace USERID with current user data
+		console.log(newEntry)
+		try {
+			await postNewEntry(USERID, newEntry);
+			setJournalEntrys(prevEntries => {
+				return [...prevEntries, newEntry]
+			})
+			await fetchAllUserData(USERID);
+		} catch (error) {
+			console.error('API postNewEntry Error:', error);
+		}
+
 	}
 
 	function deleteEntry(id: number) {
+		console.log(id);
 		setJournalEntrys(prevEntrys => {
 			return prevEntrys.filter((entry, index) => { return index !== id; })
 		})
@@ -48,7 +59,7 @@ function App() {
 				journalEntrys.map((entry, index) =>
 					<JournalEntryDisplayBlock
 						key={index}
-						id={entry.id}
+						id={index}
 						itemDate={entry.item_date}
 						timeConsumed={entry.time_consumed}
 						itemDesc={entry.item_desc}
