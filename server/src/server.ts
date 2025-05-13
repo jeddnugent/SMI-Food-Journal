@@ -144,9 +144,8 @@ app.put("/entry/:userId/:id", async (req: Request, res: Response) => {
 
 //DELETE Specifc Entry
 app.delete("/entry/:userId/:id", async (req: Request, res: Response) => {
-  const userId: string = req.params.user;
+  const userId: string = req.params.userId;
   const id: number = parseInt(req.params.id);
-  ;
   try {
     await db.query("DELETE FROM entrys WHERE user_id = $1 AND id = $2", [userId, id]);
   } catch (error: unknown) {

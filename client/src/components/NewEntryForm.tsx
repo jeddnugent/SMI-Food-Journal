@@ -24,7 +24,6 @@ function NewEntryForm(props: { createEntry: Function}) {
 		setNewEntry(currentEntry => {
 			return ({ ...currentEntry, [name]: value });
 		})
-		console.log(`${name} = ${value}`)
 	}
 
 	function onAddClicked(event: React.MouseEvent<HTMLButtonElement>) {

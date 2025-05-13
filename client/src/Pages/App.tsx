@@ -3,7 +3,7 @@ import "../styles/App.css"
 import Header from '../components/Header';
 import NewEntryForm from '../components/NewEntryForm';
 import JournalEntryDisplayBlock from '../components/JournalEntryDisplayBlock';
-import { getAllUserEntrys, postNewEntry } from '../api/entrys';
+import { getAllUserEntrys, postNewEntry, deleteEntry } from '../api/entrys';
 import Entry from '../interfaces/Entry';
 
 function App() {
@@ -45,12 +45,20 @@ function App() {
 
 	}
 
-	function deleteEntry(id: number) {
+	async function deleteEntryTapped(id: number) {
 		console.log(id);
-		setJournalEntrys(prevEntrys => {
-			return prevEntrys.filter((entry, index) => { return index !== id; })
-		})
+		try {
+			setJournalEntrys(prevEntrys => {
+				return prevEntrys.filter((entry) => { return entry.id !== id; })
+			})
+			// TODO: Replace USERID
+			await deleteEntry(USERID, id);
+			await fetchAllUserData(USERID);
+		} catch (error) {
+			console.error('API deleteEntry Error:', error);
+		}
 	}
+
 	return (
 		<div className="App">
 			<Header />
@@ -59,7 +67,7 @@ function App() {
 				journalEntrys.map((entry, index) =>
 					<JournalEntryDisplayBlock
 						key={index}
-						id={index}
+						id={entry.id}
 						itemDate={entry.item_date}
 						timeConsumed={entry.time_consumed}
 						itemDesc={entry.item_desc}
@@ -69,7 +77,7 @@ function App() {
 						feelingPost={entry.feeling_post}
 						selfTalk={entry.self_talk}
 						otherComment={entry.other_comment}
-						deleteEntry={deleteEntry} />)}
+						deleteEntry={deleteEntryTapped} />)}
 		</div>
 	);
 }
