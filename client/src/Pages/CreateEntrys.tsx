@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import "../styles/App.css"
+
 import Header from '../components/Header';
 import NewEntryForm from '../components/NewEntryForm';
 import JournalEntryDisplayBlock from '../components/JournalEntryDisplayBlock';
 import { getAllUserEntrys, postNewEntry, deleteEntry } from '../api/entrys';
 import Entry from '../interfaces/Entry';
 
-function App() {
 
-	//Test userId untill signUp is implmented
+
+
+function CreateEntrys() {
 	const USERID = "11111111-1111-1111-1111-111111111111";
 
 	const [journalEntrys, setJournalEntrys] = useState<Entry[]>([])
@@ -59,9 +60,9 @@ function App() {
 		}
 	}
 
+
 	return (
-		<div className="App">
-			<Header />
+		<div>
 			<NewEntryForm createEntry={addEntry} />
 			{
 				journalEntrys.map((entry, index) =>
@@ -77,9 +78,11 @@ function App() {
 						feelingPost={entry.feeling_post}
 						selfTalk={entry.self_talk}
 						otherComment={entry.other_comment}
-						deleteEntry={deleteEntryTapped} />)}
+						deleteEntry={deleteEntryTapped} />
+				)}
 		</div>
 	);
-}
+};
 
-export default App;
+
+export default CreateEntrys;
