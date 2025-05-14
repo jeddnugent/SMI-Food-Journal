@@ -17,19 +17,19 @@ function JournalEntryDisplayBlock(props: {
 }) {
 	return (
 		<div className="JornalDisplay">
-			<h4>{props.itemDate} {props.timeConsumed} Entry</h4>
+			<h4>{props.itemDate.substring(0, 10)} {props.timeConsumed.substring(0, 5)} Entry</h4>
 			<table>
 				<thead>
 					<tr>
-						<td>Item Descripton: </td>
+						<td>Descripton: </td>
 						<td>{props.itemDesc}</td>
 					</tr>
 					<tr>
-						<td>Consumption Location: </td>
+						<td>Location: </td>
 						<td>{props.consumedLocation}</td>
 					</tr>
 					<tr>
-						<td>Consumption Company: </td>
+						<td>Company: </td>
 						<td>{props.consumptionCompany}</td>
 					</tr>
 					<tr>
