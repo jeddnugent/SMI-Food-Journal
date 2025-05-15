@@ -18,35 +18,35 @@ function JournalEntryDisplayBlock(props: {
 }) {
 	return (
 		<div className="JornalDisplay">
-			<h4>{props.itemDate.substring(0, 10)} {props.timeConsumed.substring(0, 5)} Entry</h4>
+			<h4>{props.itemDate.substring(0, 10)} {props.timeConsumed.substring(0, 5)}</h4>
 			<table>
 				<thead>
 					<tr>
-						<td>Descripton: </td>
+						<th>Descripton: </th>
 						<td>{props.itemDesc}</td>
 					</tr>
 					<tr>
-						<td>Location: </td>
+						<th>Location: </th>
 						<td>{props.consumedLocation}</td>
 					</tr>
 					<tr>
-						<td>Company: </td>
+						<th>Company: </th>
 						<td>{props.consumptionCompany}</td>
 					</tr>
 					<tr>
-						<td>Feelings Prior: </td>
+						<th>Feelings Prior: </th>
 						<td>{props.feelingPrior}</td>
 					</tr>
 					<tr>
-						<td>Feelings Post: </td>
+						<th>Feelings Post: </th>
 						<td>{props.feelingPost}</td>
 					</tr>
 					<tr>
-						<td>Self Talk: </td>
+						<th>Self Talk: </th>
 						<td>{props.selfTalk}</td>
 					</tr>
 					<tr>
-						<td>Other Comment: </td>
+						<th>Other Comment: </th>
 						<td>{props.otherComment}</td>
 					</tr>
 				</thead>
