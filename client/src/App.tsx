@@ -6,6 +6,8 @@ import { AppProvider, type Navigation } from "@toolpad/core/AppProvider";
 import { createTheme } from "@mui/material/styles";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
+import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 
 function App() {
 
@@ -15,9 +17,14 @@ function App() {
 		//   title: 'Main items',
 		// },
 		{
-			segment: 'CreateEntrys',
-			title: 'Page',
-			icon: <DashboardIcon />,
+			segment: 'create-new-entry',
+			title: 'New Entry',
+			icon: <PostAddOutlinedIcon />,
+		},
+		{
+			segment: 'journal-overview',
+			title: 'Jorunal Overview',
+			icon: <CalendarMonthOutlinedIcon />,
 		},
 	];
 
@@ -47,13 +54,13 @@ function App() {
 					branding={{
 						logo: <img src="https://successfulminds.com.au/wp-content/uploads/2019/09/web-200.png" alt="SMI logo" />,
 						title: 'SMI Food Journal',
-						homeUrl: '/CreateEntrys',
+						homeUrl: '/create-new-entry',
 					}}
 				>
 					<DashboardLayout>
 						<Routes>
-							<Route path="/" element={<Navigate to="/CreateEntrys" replace />} />
-							<Route path="/CreateEntrys" element={<CreateEntrys />} />
+							<Route path="/" element={<Navigate to="/create-new-entry" replace />} />
+							<Route path="/create-new-entry" element={<CreateEntrys />} />
 						</Routes>
 					</DashboardLayout>
 				</AppProvider>
