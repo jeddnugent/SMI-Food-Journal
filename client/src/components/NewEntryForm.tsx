@@ -4,6 +4,7 @@ import LabelTextArea from "./LabelTextArea";
 import Zoom from '@mui/material/Zoom';
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
+import "../styles/NewEntryForm.css";
 
 function NewEntryForm(props: { createEntry: Function}) {
 

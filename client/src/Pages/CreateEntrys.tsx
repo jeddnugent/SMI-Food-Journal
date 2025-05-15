@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-
-import Header from '../components/Header';
 import NewEntryForm from '../components/NewEntryForm';
 import JournalEntryDisplayBlock from '../components/JournalEntryDisplayBlock';
 import { getAllUserEntrys, postNewEntry, deleteEntry } from '../api/entrys';

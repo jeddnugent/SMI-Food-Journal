@@ -1,0 +1,25 @@
+.JornalDisplay {
+  background: #b0b0b06d;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px #ccc;
+  padding: 10px;
+  width: 400px;
+  margin: 16px;
+  float: left;
+}
+.JornalDisplay table {
+  font-size: 1.1em;
+  margin-bottom: 6px;
+}
+
+.JornalDisplay th {
+  font-size: 1.1em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.JornalDisplay td {
+  font-size: 1.1em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
