@@ -3,6 +3,10 @@ import pg from 'pg';
 import Entry from './interfaces/Entry';
 import dotnev from "dotenv";
 import cors from 'cors';  
+import bcrypt from "bcrypt";
+import passport from "passport";
+import { Strategy } from "passport-local";
+
 //TODO: Adapt code with express routes
 //TODO: Create services file for buisness logic and to tap into SQL
 //TODO: possibly change interfaces to modles, need to check style guides for file structure hiracrchy
@@ -25,6 +29,7 @@ db.connect();
 
 const app = express();
 const PORT = process.env.PORT;
+const saltRounds = process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS) : 10;
 
 app.use(cors({
   origin: 'http://localhost:3000'  // Allow only localhost:3000
@@ -32,6 +37,45 @@ app.use(cors({
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+//User Logic
+
+//POST to register a new user
+app.post("/register", async (req, res) => {
+  const email = req.body.username;
+  const password = req.body.password;
+  try {
+    const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
+
+    if (checkResult.rows.length > 0) {
+      res.status(409).json("User with this email already exists");
+    } else {
+      bcrypt.hash(password, saltRounds, async (err, hash) => {
+        if (err) {
+          console.error("Error hashing password:", err);
+        } else {
+          const result = await db.query(
+            "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
+            [email, hash]
+          );
+          const user = result.rows[0];
+          res.json(user);
+        }
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+
+
+//Entry Logic
 
 //GET an entry of a specific ID
 app.get("/entry/:userId/:id", async (req: Request, res: Response) => {
