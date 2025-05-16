@@ -1,6 +1,7 @@
 import "./styles/App.css"
 import { BrowserRouter } from 'react-router-dom';
 import CreateEntrys from './Pages/CreateEntrys';
+import LoginSignUp from "./components/LoginSignUp";
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider, type Navigation } from "@toolpad/core/AppProvider";
 import { createTheme } from "@mui/material/styles";
@@ -59,8 +60,9 @@ function App() {
 				>
 					<DashboardLayout>
 						<Routes>
-							<Route path="/" element={<Navigate to="/create-new-entry" replace />} />
+							<Route path="/" element={<Navigate to="/login-signup" replace />} />
 							<Route path="/create-new-entry" element={<CreateEntrys />} />
+							<Route path="/login-signup" element={<LoginSignUp />} />
 						</Routes>
 					</DashboardLayout>
 				</AppProvider>
