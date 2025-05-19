@@ -1,0 +1,10 @@
+.NewEntryContainer{
+	display: grid;
+	flex-direction: row;
+	grid-template-columns: 60% auto;
+	justify-content: center;
+}
+
+.EntryList{
+	list-style: none;
+}

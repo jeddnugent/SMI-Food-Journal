@@ -1,3 +1,13 @@
+.journalForm {
+  display: block;
+  grid-template-columns: 300px 300px;
+	margin: 10px;
+  padding-bottom: 30px;
+  padding: 10px;
+  border-radius: 5%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 /* Style inputs, select elements and textareas */
 input[type=text],
 select,
@@ -19,7 +29,6 @@ label {
 /* Style the submit button */
 input[type=submit] {
 	background-color: #04AA6D;
-	color: white;
 	padding: 12px 20px;
 	border: none;
 	border-radius: 4px;
@@ -28,23 +37,17 @@ input[type=submit] {
 }
 
 .timeDateContainer {
-	display: grid;
+	display: flex;
+	justify-content: center;
 	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr;
-	align-items: center;
-	width: 60%;
-  margin: auto;
-}
-
-.item1, .item2 {
-  padding: 5px;
-  text-align: center;
+	gap: 35px;
 }
 
 /* Style the container */
-.container {
+.NewEntryForm-container {
 	border-radius: 5px;
 	padding: 20px;
+	/* background-color: red; */
 }
 
 /* Floating column for labels: 25% width */
@@ -66,6 +69,12 @@ input[type=submit] {
 	content: "";
 	display: table;
 	clear: both;
+}
+
+
+ul {
+  list-style:lower-greek;
+  padding: 0px 0px 0px 0px;
 }
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */

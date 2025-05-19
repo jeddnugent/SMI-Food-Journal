@@ -1,0 +1,14 @@
+.EntryListItem-container {
+	display: grid;
+	grid-template-columns: 3fr 1fr 1fr 1fr;
+	width: 100%;
+	gap: 30px;
+
+}
+
+.itemName,
+.time,
+.date {
+	min-width: 80px;
+	/* optional for spacing consistency */
+}

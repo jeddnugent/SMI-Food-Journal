@@ -2,16 +2,15 @@
   text-align: center;
 }
 
+h6{
+  color: #282c34;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
 .App-header {
   background-color: #282c34;
@@ -25,47 +24,20 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #282c34;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-form{
+form {
   display: block;
 }
 
-.journalForm {
-  display: block;
-  /* grid-template-columns: 300px 300px; */
-  margin: auto;
-  width: 60%;
-  padding: 10px;
-  border-radius: 5%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  margin: 36px;
-  align-self: left;
-  float: left;
-}
 
-.entryLabel{
+
+.entryLabel {
   font-weight: bold;
   padding: 8px;
 }
 
-.textArea{
+.textArea {
   font-weight: bold;
 }
-
-
-
-
-
-
