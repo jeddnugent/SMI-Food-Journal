@@ -29,21 +29,15 @@ function App() {
 		},
 	];
 
-	const SMITheme = createTheme({
-		cssVariables: {
-			colorSchemeSelector: "data-toolpad-color-scheme",
-		},
-		colorSchemes: { light: true },
-		breakpoints: {
-			values: {
-				xs: 0,
-				sm: 600,
-				md: 600,
-				lg: 1200,
-				xl: 1536,
-			},
-		},
-	});
+const SMITheme = createTheme({
+  palette: {
+    primary: {
+      main: '#2d2f79',
+      contrastText: '#000000',
+    },
+    // Add more custom colors as needed
+  },
+});
 
 
 	return (
