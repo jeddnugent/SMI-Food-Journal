@@ -9,7 +9,7 @@ CREATE TABLE users (
 CREATE TABLE entrys (
   id SERIAL NOT NULL,
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  item_date DATE NOT NULL,
+  item_date TEXT NOT NULL,
   time_consumed TIME NOT NULL,
   item_desc TEXT NOT NULL,
   consumed_location TEXT NOT NULL,
