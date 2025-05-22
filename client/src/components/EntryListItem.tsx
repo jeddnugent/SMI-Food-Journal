@@ -15,14 +15,10 @@ function EntryListItem(props: {
 	feelingPost: string;
 	selfTalk: string;
 	otherComment: string;
-	editEntry: Function;
-	deleteEntry: Function;
+	editEntry: (id: number) => void;
+	deleteEntry: (id: number) => void;
 }) {
-
-	console.log(props.id, props.timeConsumed)
-	console.log(props.id, props.itemDate)
-
-
+	
 	const dateShortend = props.itemDate ? props.itemDate.substring(0, 10): "";
 	const timeShortend = props.timeConsumed ? props.timeConsumed.substring(0, 5): "";
 
@@ -40,14 +36,14 @@ function EntryListItem(props: {
 						<button className="edit">
 							<EditIcon />
 						</button>
-						<button onClick={() => { props.deleteEntry(props.id) }}>
+						<button onClick={() => { props.deleteEntry(props.id); }}>
 							<DeleteIcon />
 						</button>
 					</div>
 				</div>
 			</li>
 		</div>
-	)
+	);
 }
 
 

@@ -1,7 +1,7 @@
 import axios from "axios";
-import Entry from "../interfaces/Entry";
+import type { Entry } from "../interfaces/Entry";
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const getAllUserEntrys = (userId: string) =>
   axios.get(`${API_URL}/entry/${userId}/`);

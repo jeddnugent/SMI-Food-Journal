@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import NewEntryForm from '../components/NewEntryForm';
 import JournalEntryDisplayBlock from '../components/JournalEntryDisplayBlock';
 import { getAllUserEntrys, postNewEntry, deleteEntry } from '../api/entrys';
-import Entry from '../interfaces/Entry';
+import type { Entry } from '../interfaces/Entry';
 import EntryListItem from '../components/EntryListItem';
-import "../styles/CreateEntrys.css"
+import "../styles/CreateEntrys.css";
 
 
 
@@ -14,7 +14,7 @@ function CreateEntrys() {
 	const USERID = "11111111-1111-1111-1111-111111111111";
 	const [time, setTime] = useState(new Date().getTime().toString());
 
-	const [journalEntrys, setJournalEntrys] = useState<Entry[]>([])
+	const [journalEntrys, setJournalEntrys] = useState<Entry[]>([]);
 
 	async function fetchAllUserData(userid: string) {
 		try {
@@ -38,12 +38,12 @@ function CreateEntrys() {
 
 	async function addEntry(newEntry: Entry) {
 		//TODO: Replace USERID with current user data
-		console.log(newEntry)
+		console.log(newEntry);
 		try {
 			await postNewEntry(USERID, newEntry);
 			setJournalEntrys(prevEntries => {
-				return [...prevEntries, newEntry]
-			})
+				return [...prevEntries, newEntry];
+			});
 			await fetchAllUserData(USERID);
 		} catch (error) {
 			console.error('API postNewEntry Error:', error);
@@ -55,8 +55,8 @@ function CreateEntrys() {
 		console.log(id);
 		try {
 			setJournalEntrys(prevEntrys => {
-				return prevEntrys.filter((entry) => { return entry.id !== id; })
-			})
+				return prevEntrys.filter((entry) => { return entry.id !== id; });
+			});
 			// TODO: Replace USERID
 			await deleteEntry(USERID, id);
 			await fetchAllUserData(USERID);
@@ -93,11 +93,11 @@ function CreateEntrys() {
 				<div>
 					<h3>Today's Entrys</h3>
 					<ul className='EntryList'>
-						{
-							journalEntrys.map((entry, index) =>
+						{Array.isArray(journalEntrys)
+							? journalEntrys.map((entry, index) => (
 								<EntryListItem
 									key={index}
-									id={entry.id}
+									id={entry.id ?? 0}
 									itemDate={entry.item_date}
 									timeConsumed={entry.time_consumed}
 									itemDesc={entry.item_desc}
@@ -108,8 +108,11 @@ function CreateEntrys() {
 									selfTalk={entry.self_talk}
 									otherComment={entry.other_comment}
 									editEntry={deleteEntryTapped}
-									deleteEntry={deleteEntryTapped} />
-							)}
+									deleteEntry={deleteEntryTapped}
+								/>
+							))
+							: <p>No entries found or loading...</p>
+						}
 
 					</ul>
 				</div>

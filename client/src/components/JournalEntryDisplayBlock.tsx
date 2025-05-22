@@ -14,7 +14,7 @@ function JournalEntryDisplayBlock(props: {
 	feelingPost: string;
 	selfTalk: string;
 	otherComment: string;
-	deleteEntry: Function;
+	deleteEntry: (id: number) => void;
 }) {
 	return (
 		<div className="JornalDisplay">
@@ -51,7 +51,7 @@ function JournalEntryDisplayBlock(props: {
 					</tr>
 				</thead>
 			</table>
-			<button onClick={() => { props.deleteEntry(props.id) }}>
+			<button onClick={() => { props.deleteEntry(props.id); }}>
 				<DeleteIcon />
 			</button>
 		</div>

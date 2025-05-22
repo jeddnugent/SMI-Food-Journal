@@ -1,6 +1,6 @@
-interface Entry {
-	id: number,
-	user_id: string;
+export interface Entry {
+	id?: number,
+	user_id?: string;
 	item_date: string;
 	time_consumed: string;
 	item_desc: string;
@@ -11,7 +11,5 @@ interface Entry {
 	self_talk: string;
 	other_comment: string;
 };
-
-export default Entry;
 
 

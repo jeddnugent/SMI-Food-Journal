@@ -5,68 +5,69 @@ import Zoom from '@mui/material/Zoom';
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import "../styles/NewEntryForm.css";
+import type { Entry } from "../interfaces/Entry";
 
-function NewEntryForm(props: { createEntry: Function }) {
+function NewEntryForm(props: { createEntry: (entry: Entry) => void }) {
 
-	const [newEntry, setNewEntry] = useState({
-		itemDate: "",
-		timeConsumed: "",
-		itemDesc: "",
-		consumedLocation: "",
-		consumptionCompany: "",
-		feelingPrior: "",
-		feelingPost: "",
-		selfTalk: "",
-		otherComment: "",
-	})
+	const [newEntry, setNewEntry] = useState<Entry>({
+		item_date: "",
+		time_consumed: "",
+		item_desc: "",
+		consumed_location: "",
+		consumption_company: "",
+		feeling_prior: "",
+		feeling_post: "",
+		self_talk: "",
+		other_comment: "",
+	});
 
 	function handleTextAreaChanged(event: { target: { name: string; value: string; }; }) {
 		const { name, value } = event.target;
 		setNewEntry(currentEntry => {
 			return ({ ...currentEntry, [name]: value });
-		})
+		});
 	}
 
 	function onAddClicked(event: React.MouseEvent<HTMLButtonElement>) {
-		props.createEntry(newEntry)
+		props.createEntry(newEntry);
 		setNewEntry({
-			itemDate: "",
-			timeConsumed: "",
-			itemDesc: "",
-			consumedLocation: "",
-			consumptionCompany: "",
-			feelingPrior: "",
-			feelingPost: "",
-			selfTalk: "",
-			otherComment: "",
+			item_date: "",
+			time_consumed: "",
+			item_desc: "",
+			consumed_location: "",
+			consumption_company: "",
+			feeling_prior: "",
+			feeling_post: "",
+			self_talk: "",
+			other_comment: "",
 		});
 		event.preventDefault();
 	}
 
 	return (
-		<div >
+		<div>
 			<form className="journalForm">
-				<div className="container">
+				<div className="NewEntryForm-container">
 					<div>
 						<h1>New Journal Entry</h1>
 					</div>
 					<div className="timeDateContainer">
-						<div className="item1">
-							<label htmlFor="itemDate">Date </label>
-							<input type="date" id="itemDate" name="itemDate" onChange={handleTextAreaChanged} value={newEntry.itemDate} />
+						<div>
+							<label htmlFor="item_date">Date </label>
+							<input type="date" id="item_date" name="item_date" onChange={handleTextAreaChanged} value={newEntry.item_date} />
 						</div>
-						<div className="item2">
+						<div>
 							<label>Time Consumed </label>
-							<input type="time" id="timeConsumed" name="timeConsumed" onChange={handleTextAreaChanged} value={newEntry.timeConsumed} />
+							<input type="time" id="time_consumed" name="time_consumed" onChange={handleTextAreaChanged} value={newEntry.time_consumed} />
 						</div>
 					</div>
-					<LabelTextArea className="itemDesc" onChange={handleTextAreaChanged} value={newEntry.itemDesc} minRows={1} labelText="Food/Drink Description" />
-					<LabelTextArea className="consumedLocation" onChange={handleTextAreaChanged} value={newEntry.consumedLocation} minRows={1} labelText="Where were you when you ate / drank this?" />
-					<LabelTextArea className="consumptionCompany" onChange={handleTextAreaChanged} value={newEntry.consumptionCompany} minRows={1} labelText="Who were you with at the time?" />
-					<LabelTextArea className="feelingPrior" onChange={handleTextAreaChanged} value={newEntry.feelingPrior} minRows={2} labelText="How were you feeling emotionally prior to eating / drinking? (Note: Hungry is not an emotion)" />
-					<LabelTextArea className="feelingPost" onChange={handleTextAreaChanged} value={newEntry.feelingPost} minRows={2} labelText="How did you feel emotionally after eating / drinking?" />
-					<LabelTextArea className="selfTalk" onChange={handleTextAreaChanged} value={newEntry.selfTalk} minRows={2} labelText="What did you say to yourself before and after you ate/drank?" />
-					<LabelTextArea className="otherComment" onChange={handleTextAreaChanged} value={newEntry.otherComment} minRows={1} labelText="Other Comments" />
+					<LabelTextArea className="item_desc" onChange={handleTextAreaChanged} value={newEntry.item_desc} minRows={1} labelText="Food/Drink Description" />
+					<LabelTextArea className="consumed_location" onChange={handleTextAreaChanged} value={newEntry.consumed_location} minRows={1} labelText="Where were you when you ate / drank this?" />
+					<LabelTextArea className="consumption_company" onChange={handleTextAreaChanged} value={newEntry.consumption_company} minRows={1} labelText="Who were you with at the time?" />
+					<LabelTextArea className="feeling_prior" onChange={handleTextAreaChanged} value={newEntry.feeling_prior} minRows={2} labelText="How were you feeling emotionally prior to eating / drinking? (Note: Hungry is not an emotion)" />
+					<LabelTextArea className="feeling_post" onChange={handleTextAreaChanged} value={newEntry.feeling_post} minRows={2} labelText="How did you feel emotionally after eating / drinking?" />
+					<LabelTextArea className="self_talk" onChange={handleTextAreaChanged} value={newEntry.self_talk} minRows={2} labelText="What did you say to yourself before and after you ate/drank?" />
+					<LabelTextArea className="other_comment" onChange={handleTextAreaChanged} value={newEntry.other_comment} minRows={1} labelText="Other Comments" />
 				</div>
 				<Zoom in={true}>
 					<Fab onClick={onAddClicked}>
