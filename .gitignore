@@ -13,7 +13,7 @@ dist-ssr
 .env
 .env.development
 .env.* 
-.d.ts
+src/vite-env.d.ts
 
 # Logs
 npm-debug.log*
