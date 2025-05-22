@@ -40,8 +40,9 @@ This information allows practitioners to best help their journies through hypnot
 ### **How to run solution locally**
 If you want to fully explore the functionality of this solution you can by following these steps:
 - Clone this repo
-- run `npm i` to install all the neccasary packages
+- run `npm i` to install all the neccasary packages in both `/client` and `/server` folders
 - set up your postgres database through the sql schema and populate it with the provided SQL test data
+- create vite-env.d.ts for client side secrets
 - then create a .env file or replace the db configuration in the server.ts file in the `/server` folder
 - after this you are all set up to run the solution with `npm run dev` for the server side which is designed to locally deploy to port 4000
-- and use `npm start` for the client side which is designed to be locally deployed on port 3000
+- and use `npm run dev` for the client side which is designed to be locally deployed on port 3000
