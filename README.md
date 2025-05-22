@@ -22,17 +22,20 @@ This information allows practitioners to best help their journies through hypnot
 
 - [**Frontend**](https://github.com/jeddnugent/SMI-Food-Journal/tree/main/client):
   - React (with TypeScript)
+  - Vite (Dev tooling)
   - Axios (for API requests)
-  - CSS (for styling)
+  - Material UI and TailwindCSS (Styling Frameworks and some pre-built elements
+  - CSS (general styling)
   
 - [**Backend**](https://github.com/jeddnugent/SMI-Food-Journal/tree/main/server):
   - Express.js (Node.js framework)
+  - Passport.js (For Authentication Stratergy)
+  - bcrypt (For Password Hashing and Salting)
   - PostgreSQL (relational database)
 	- [Schema found here](https://github.com/jeddnugent/SMI-Food-Journal/tree/main/server/sql)
   - `pg` (node-postgres for connecting to and interacting with PostgreSQL)
 
 - **Tools**:
-  - Nodemon (for auto-restarting the backend during development)
   - Postman (for API testing)
 
 ---
@@ -42,7 +45,7 @@ If you want to fully explore the functionality of this solution you can by follo
 - Clone this repo
 - run `npm i` to install all the neccasary packages in both `/client` and `/server` folders
 - set up your postgres database through the sql schema and populate it with the provided SQL test data
-- create vite-env.d.ts for client side secrets
+- create .env for client side secrets which needs to store the server API
 - then create a .env file or replace the db configuration in the server.ts file in the `/server` folder
 - after this you are all set up to run the solution with `npm run dev` for the server side which is designed to locally deploy to port 4000
 - and use `npm run dev` for the client side which is designed to be locally deployed on port 3000
