@@ -1,4 +1,4 @@
-import "./styles/App.css"
+import "./styles/App.css";
 import { BrowserRouter } from 'react-router-dom';
 import CreateEntrys from './Pages/CreateEntrys';
 import LoginSignUp from "./components/LoginSignUp";
@@ -24,13 +24,14 @@ function App() {
 		},
 		{
 			segment: 'journal-overview',
-			title: 'Jorunal Overview',
+			title: 'Journal Overview',
 			icon: <CalendarMonthOutlinedIcon />,
 		},
 	];
 
 const SMITheme = createTheme({
-  palette: {
+  colorSchemes: { light: true },
+	palette: {
     primary: {
       main: '#2d2f79',
       contrastText: '#000000',
