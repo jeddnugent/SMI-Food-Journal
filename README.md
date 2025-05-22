@@ -22,6 +22,7 @@ This information allows practitioners to best help their journies through hypnot
 
 - [**Frontend**](https://github.com/jeddnugent/SMI-Food-Journal/tree/main/client):
   - React (with TypeScript)
+  - React-Router (Client side page routing)
   - Vite (Dev tooling)
   - Axios (for API requests)
   - Material UI and TailwindCSS (Styling Frameworks and some pre-built elements)
