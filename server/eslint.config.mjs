@@ -23,6 +23,7 @@ export default defineConfig([
       "@typescript-eslint/no-unused-vars": "warn", 
       "no-var": "off",
       "semi": ["error", "always"],
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   }),
 ]);
