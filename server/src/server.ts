@@ -3,6 +3,7 @@ import pg from 'pg';
 import Entry from './interfaces/Entry';
 import dotnev from "dotenv";
 import cors from 'cors';  
+import type { Entry } from './interfaces/Entry';
 import bcrypt from "bcrypt";
 import passport from "passport";
 import { Strategy } from "passport-local";
@@ -60,8 +61,8 @@ app.post("/register", async (req, res) => {
           console.error("Error hashing password:", err);
         } else {
           const result = await db.query(
-            "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
-            [email, hash]
+            "INSERT INTO users (f_name, l_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *",
+            [fName, lName, email, hash]
           );
           const user = result.rows[0];
           res.json(user);
@@ -72,8 +73,6 @@ app.post("/register", async (req, res) => {
     console.log(err);
   }
 });
-
-
 
 //Entry Logic
 
@@ -159,22 +158,12 @@ app.post("/entry/:userId", async (req: Request, res: Response) => {
 app.put("/entry/:userId/:id", async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
   const userId: string = req.params.userId;
-  const {
-    itemDate,
-    timeConsumed,
-    itemDesc,
-    consumedLocation,
-    consumptionCompany,
-    feelingPrior,
-    feelingPost,
-    selfTalk,
-    otherComment
-  } = req.body;
+  const entry: Entry = req.body;
 
   try {
     await db.query
       ("UPDATE entrys SET item_date = $3, time_consumed = $4, item_desc = $5, consumed_location = $6, consumption_company = $7, feeling_prior = $8, feeling_post = $9, self_talk = $10, other_comment = $11 WHERE user_id = $1 AND id = $2",
-        [userId, id, itemDate, timeConsumed, itemDesc, consumedLocation, consumptionCompany, feelingPrior, feelingPost, selfTalk, otherComment]);
+        [userId, id, entry.item_date, entry.time_consumed, entry.item_desc, entry.consumed_location, entry.consumption_company, entry.feeling_prior, entry.feeling_post, entry.self_talk, entry.other_comment]);
   } catch (error) {
     if (error instanceof Error) {
       console.error('Database Error:', error.message);
