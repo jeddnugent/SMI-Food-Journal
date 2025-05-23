@@ -41,4 +41,4 @@ Thumbs.db          # Windows
 
 # Debugger config files
 /.vscode/
-client/src/vite-env.d.ts
+
