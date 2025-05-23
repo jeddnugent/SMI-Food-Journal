@@ -1,12 +1,15 @@
 import express, { Request, Response, NextFunction } from "express";
 import pg from 'pg';
-import Entry from './interfaces/Entry';
 import dotnev from "dotenv";
-import cors from 'cors';  
+
 import type { Entry } from './interfaces/Entry';
+import User from "./interfaces/User";
+
+import cors from 'cors';
 import bcrypt from "bcrypt";
 import passport from "passport";
 import { Strategy } from "passport-local";
+import session from "express-session";
 
 //TODO: Adapt code with express routes
 //TODO: Create services file for buisness logic and to tap into SQL
@@ -18,6 +21,32 @@ dotnev.config({
   path: `.env.development`
 });
 
+const app = express();
+const PORT = process.env.PORT;
+const saltRounds = process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS) : 10;
+
+app.use(cors({
+  origin: 'http://localhost:3000',  // Allow only localhost:3000
+  credentials: true
+}));
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET!.toString(),
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, //one day cookie
+    }
+  })
+);
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 const db = new pg.Client({
   user: process.env.DATABASE_USER,
   host: process.env.DATABASE_HOST,
@@ -28,33 +57,57 @@ const db = new pg.Client({
 
 db.connect();
 
-const app = express();
-const PORT = process.env.PORT;
-const saltRounds = process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS) : 10;
-
-app.use(cors({
-  origin: 'http://localhost:3000'  // Allow only localhost:3000
-}));
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 //User Logic
 
-//POST to register a new user
+app.get("/failedLogin", (req, res) => {
+  res.json("Not authenticated");
+});
+
+
+app.get("/authenticateUser", (req, res) => {
+  // console.log(req.user);
+  if (req.isAuthenticated()) {
+    res.json(req.user);
+    res.json("YOU ARE VALID TWIN");
+  } else {
+    res.redirect("/failedLogin");
+  }
+});
+
+app.get("/logout", (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/');
+  });
+});
+
+
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/authenticateUser",
+    failureRedirect: "/failedLogin",
+  })
+);
+
+
 app.post("/register", async (req, res) => {
+  const fName = req.body.fName;
+  const lName = req.body.lName;
   const email = req.body.username;
   const password = req.body.password;
+
   try {
     const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
 
     if (checkResult.rows.length > 0) {
-      res.status(409).json("User with this email already exists");
+      //user already exsits
+      res.status(409).json({ error: 'Email provided is aleady being used' });
     } else {
       bcrypt.hash(password, saltRounds, async (err, hash) => {
         if (err) {
@@ -65,7 +118,10 @@ app.post("/register", async (req, res) => {
             [fName, lName, email, hash]
           );
           const user = result.rows[0];
-          res.json(user);
+          req.login(user, (err) => {
+            console.log("register success");
+            res.redirect("/authenticateUser");
+          });
         }
       });
     }
@@ -191,6 +247,47 @@ app.delete("/entry/:userId/:id", async (req: Request, res: Response) => {
     }
   }
 });
+
+passport.use(
+  new Strategy(async function verify(username, password, cb) {
+    try {
+      const result = await db.query("SELECT * FROM users WHERE email = $1 ", [
+        username,
+      ]);
+      if (result.rows.length > 0) {
+        const user = result.rows[0];
+        const storedHashedPassword = user.password;
+        bcrypt.compare(password, storedHashedPassword, (err, valid) => {
+          if (err) {
+            //Error with password check
+            console.error("Error comparing passwords:", err);
+            return cb(err);
+          } else {
+            if (valid) {
+              //Passed password check
+              return cb(null, user);
+            } else {
+              //Did not pass password check
+              return cb(null, false);
+            }
+          }
+        });
+      } else {
+        return cb("User not found");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  })
+);
+
+passport.serializeUser((user, cb) => {
+  cb(null, user);
+});
+passport.deserializeUser((user: Express.User, cb: (err: any, user?: Express.User | false | null) => void) => {
+  cb(null, user);
+});
+
 
 
 app.listen(PORT, () => {
