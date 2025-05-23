@@ -4,6 +4,7 @@ import JournalEntryDisplayBlock from '../components/JournalEntryDisplayBlock';
 import { getAllUserEntrys, postNewEntry, deleteEntry } from '../api/entrys';
 import type { Entry } from '../interfaces/Entry';
 import EntryListItem from '../components/EntryListItem';
+import EditDialogBox from "../components/EditDialogBox";
 import "../styles/CreateEntrys.css";
 
 
@@ -12,17 +13,19 @@ import "../styles/CreateEntrys.css";
 
 function CreateEntrys() {
 	const USERID = "11111111-1111-1111-1111-111111111111";
-	const [time, setTime] = useState(new Date().getTime().toString());
 
 	const [journalEntrys, setJournalEntrys] = useState<Entry[]>([]);
 
-	async function fetchAllUserData(userid: string) {
+	async function fetchAllUserData() {
 		try {
-			const result = await getAllUserEntrys(userid);
+			const result = await getAllUserEntrys(USERID);
 			if (result.data.length > 0) {
+				console.log(import.meta.env.VITE_API_URL);
+				console.log(result.data);
 				const userData: Entry[] = result.data;
 				setJournalEntrys(userData);
 			}
+			filterJournalEntries();
 		} catch (error) {
 			console.error('API fetchAllUserData Error:', error);
 		}
@@ -31,9 +34,7 @@ function CreateEntrys() {
 
 	useEffect(() => {
 		//TODO: Replace USERID with current user data
-		fetchAllUserData(USERID);
-		setTime(new Date().getTime().toString());
-		console.log(time);
+		fetchAllUserData();
 	}, []);
 
 	async function addEntry(newEntry: Entry) {
@@ -44,7 +45,7 @@ function CreateEntrys() {
 			setJournalEntrys(prevEntries => {
 				return [...prevEntries, newEntry];
 			});
-			await fetchAllUserData(USERID);
+			await fetchAllUserData();
 		} catch (error) {
 			console.error('API postNewEntry Error:', error);
 		}
@@ -59,10 +60,14 @@ function CreateEntrys() {
 			});
 			// TODO: Replace USERID
 			await deleteEntry(USERID, id);
-			await fetchAllUserData(USERID);
+			await fetchAllUserData();
 		} catch (error) {
 			console.error('API deleteEntry Error:', error);
 		}
+	}
+
+	function filterJournalEntries() {
+		const currentDate = new Date().toISOString();
 	}
 
 
@@ -72,43 +77,16 @@ function CreateEntrys() {
 				<div className="NewEntryForm">
 					<NewEntryForm createEntry={addEntry} />
 				</div>
-
-
-				{/* {
-				journalEntrys.map((entry, index) =>
-					<JournalEntryDisplayBlock
-						key={index}
-						id={entry.id}
-						itemDate={entry.item_date}
-						timeConsumed={entry.time_consumed}
-						itemDesc={entry.item_desc}
-						consumedLocation={entry.consumed_location}
-						consumptionCompany={entry.consumption_company}
-						feelingPrior={entry.feeling_prior}
-						feelingPost={entry.feeling_post}
-						selfTalk={entry.self_talk}
-						otherComment={entry.other_comment}
-						deleteEntry={deleteEntryTapped} />
-				// )} */}
 				<div>
 					<h3>Today's Entrys</h3>
 					<ul className='EntryList'>
 						{Array.isArray(journalEntrys)
-							? journalEntrys.map((entry, index) => (
+							? journalEntrys.map((jorunalEntry: Entry, index) => (
 								<EntryListItem
 									key={index}
-									id={entry.id ?? 0}
-									itemDate={entry.item_date}
-									timeConsumed={entry.time_consumed}
-									itemDesc={entry.item_desc}
-									consumedLocation={entry.consumed_location}
-									consumptionCompany={entry.consumption_company}
-									feelingPrior={entry.feeling_prior}
-									feelingPost={entry.feeling_post}
-									selfTalk={entry.self_talk}
-									otherComment={entry.other_comment}
-									editEntry={deleteEntryTapped}
+									entry={jorunalEntry}
 									deleteEntry={deleteEntryTapped}
+									updateEntryList={fetchAllUserData}
 								/>
 							))
 							: <p>No entries found or loading...</p>

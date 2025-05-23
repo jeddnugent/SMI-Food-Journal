@@ -1,9 +1,17 @@
 .EntryListItem-container {
 	display: grid;
-	grid-template-columns: 3fr 1fr 1fr 1fr;
+	grid-template-columns: 2fr 1fr 1fr 1fr;
 	width: 100%;
 	gap: 30px;
+}
 
+.buttonContainer{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-content: start;
+	gap: 3px;
+	height: 30px;
+	width: 30px;
 }
 
 .itemName,
