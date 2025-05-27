@@ -1,16 +1,10 @@
 import { useState, useEffect } from 'react';
 import NewEntryForm from '../components/NewEntryForm';
-import JournalEntryDisplayBlock from '../components/JournalEntryDisplayBlock';
-import { postNewEntry, deleteEntry, getAllUserEntrysDate } from '../api/entrys';
+import { postNewEntry, deleteEntry, getAllUserEntrysDate, updateEntry } from '../api/entrys';
 import type { Entry } from '../interfaces/Entry';
 import EntryListItem from '../components/EntryListItem';
-import EditDialogBox from "../components/EditDialogBox";
 
 import "../styles/CreateEntrys.css";
-
-
-
-
 
 function CreateEntrys() {
 	const USERID = "11111111-1111-1111-1111-111111111111";
@@ -29,7 +23,6 @@ function CreateEntrys() {
 			console.error('API fetchAllUserData Error:', error);
 		}
 	}
-
 
 	useEffect(() => {
 		//TODO: Replace USERID with current user data
@@ -65,6 +58,21 @@ function CreateEntrys() {
 		}
 	}
 
+	async function updateEntries(updatedEntry: Entry) {
+		try {
+			console.log("UPDATE DA ENTRIES");
+			console.log("updated Entry", updatedEntry);
+			setJournalEntrys(journalEntrys.map(entry =>
+				entry.id === updatedEntry.id ? { ...entry, ...updatedEntry } : entry));
+			//TODO: Replace hardcoded USERID
+			await updateEntry(USERID, updatedEntry.id!, updatedEntry);
+			await fetchAllUserData();
+		} catch (error) {
+			console.error('API entryListEdited Error:', error);
+		}
+	}
+
+
 	return (
 		<div>
 			<div className="NewEntryContainer">
@@ -80,7 +88,7 @@ function CreateEntrys() {
 									key={index}
 									entry={jorunalEntry}
 									deleteEntry={deleteEntryTapped}
-									updateEntryList={fetchAllUserData}
+									updateEntryList={updateEntries}
 								/>
 							))
 							: <p>No entries found or loading...</p>

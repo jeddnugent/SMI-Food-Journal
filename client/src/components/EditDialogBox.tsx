@@ -15,7 +15,7 @@ export default function FormDialog(props: {
   entry: Entry;
   handleClose: () => void;
   handleOpen: () => void;
-  updateEntryList: () => void;
+  updateEntryList: (entry: Entry) => void;
 }) {
 
 
@@ -34,10 +34,8 @@ export default function FormDialog(props: {
 
   async function onSubmit() {
     console.log(updatedEntry);
-    
     //TODO: Replace test user data
-    console.log(updatedEntry);
-    await updateEntry("11111111-1111-1111-1111-111111111111", updatedEntry.id!, updatedEntry);
+    props.updateEntryList(updatedEntry);
     props.handleClose();
   }
   return (
@@ -51,7 +49,6 @@ export default function FormDialog(props: {
             onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
               event.preventDefault();
               onSubmit();
-              props.updateEntryList();
               props.handleClose();
             },
           },
