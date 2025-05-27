@@ -9,6 +9,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import JournalOverview from "./Pages/JournalOverview";
 
 function App() {
 
@@ -50,7 +51,7 @@ const SMITheme = createTheme({
 					branding={{
 						logo: <img src="https://successfulminds.com.au/wp-content/uploads/2019/09/web-200.png" alt="SMI logo" />,
 						title: 'SMI Food Journal',
-						homeUrl: '/create-new-entry',
+						homeUrl: '/',
 					}}
 				>
 					<DashboardLayout>
@@ -58,6 +59,7 @@ const SMITheme = createTheme({
 							<Route path="/" element={<Navigate to="/login-signup" replace />} />
 							<Route path="/create-new-entry" element={<CreateEntrys />} />
 							<Route path="/login-signup" element={<LoginSignUp />} />
+							<Route path="/journal-overview" element={<JournalOverview />} />
 						</Routes>
 					</DashboardLayout>
 				</AppProvider>
