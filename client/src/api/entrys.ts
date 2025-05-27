@@ -9,6 +9,9 @@ export const getAllUserEntrys = (userId: string) =>
 export const getSpecificUserEntry = (userId: string, id: number) =>
   axios.post(`${API_URL}/entry/${userId}/${id}`);
 
+export const getAllUserEntrysDate = (userId: string, date: string) =>
+  axios.get(`${API_URL}/entry/date/${userId}/${date}`);
+
 export const postNewEntry = (userId: string, data: Entry) =>
   axios.post(`${API_URL}/entry/${userId}`, data);
 

@@ -179,6 +179,30 @@ app.get("/entry/:userId", async (req: Request, res: Response) => {
   }
 });
 
+
+//GET all entries for a user given a specific date
+app.get("/entry/date/:userId/:date", async (req: Request, res: Response) => {
+  const userId: string = req.params.userId;
+  const date: string = req.params.date;
+  try {
+    const result = await db.query("SELECT * FROM entrys WHERE user_id = $1 AND item_date = $2", [userId, date]);
+    const foundEntries: Entry[] = result.rows;
+    if (foundEntries.length < -1) {
+      res.status(404).json({ error: "This user has no entrys recorded" });
+      return;
+    }
+    res.json(foundEntries);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Database Error:', error.message);
+      res.status(400).json({ error: error.message });
+    } else {
+      console.error('Unexpected error type:', error);
+      res.status(500).json({ error: 'An unexpected error occurred' });
+    }
+  }
+});
+
 // POST New Entry
 app.post("/entry/:userId", async (req: Request, res: Response) => {
   const userId: string = req.params.userId;

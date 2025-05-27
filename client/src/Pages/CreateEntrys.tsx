@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import NewEntryForm from '../components/NewEntryForm';
 import JournalEntryDisplayBlock from '../components/JournalEntryDisplayBlock';
-import { getAllUserEntrys, postNewEntry, deleteEntry } from '../api/entrys';
+import { postNewEntry, deleteEntry, getAllUserEntrysDate } from '../api/entrys';
 import type { Entry } from '../interfaces/Entry';
 import EntryListItem from '../components/EntryListItem';
 import EditDialogBox from "../components/EditDialogBox";
+
 import "../styles/CreateEntrys.css";
 
 
@@ -18,14 +19,12 @@ function CreateEntrys() {
 
 	async function fetchAllUserData() {
 		try {
-			const result = await getAllUserEntrys(USERID);
+			const currentDate = new Date().toISOString().split('T')[0];
+			const result = await getAllUserEntrysDate(USERID, currentDate);
 			if (result.data.length > 0) {
-				console.log(import.meta.env.VITE_API_URL);
-				console.log(result.data);
 				const userData: Entry[] = result.data;
 				setJournalEntrys(userData);
 			}
-			filterJournalEntries();
 		} catch (error) {
 			console.error('API fetchAllUserData Error:', error);
 		}
@@ -65,11 +64,6 @@ function CreateEntrys() {
 			console.error('API deleteEntry Error:', error);
 		}
 	}
-
-	function filterJournalEntries() {
-		const currentDate = new Date().toISOString();
-	}
-
 
 	return (
 		<div>
