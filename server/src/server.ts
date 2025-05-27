@@ -182,22 +182,13 @@ app.get("/entry/:userId", async (req: Request, res: Response) => {
 // POST New Entry
 app.post("/entry/:userId", async (req: Request, res: Response) => {
   const userId: string = req.params.userId;
-  const {
-    itemDate,
-    timeConsumed,
-    itemDesc,
-    consumedLocation,
-    consumptionCompany,
-    feelingPrior,
-    feelingPost,
-    selfTalk,
-    otherComment } = req.body;
+  const entry: Entry = req.body;
 
   //TODO: Add validation for new user
 
   try {
     await db.query("INSERT INTO entrys (user_id, item_date, time_consumed, item_desc, consumed_location, consumption_company, feeling_prior, feeling_post, self_talk, other_comment) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
-      [userId, itemDate, timeConsumed, itemDesc, consumedLocation, consumptionCompany, feelingPrior, feelingPost, selfTalk, otherComment]);
+      [userId, entry.item_date, entry.time_consumed, entry.item_desc, entry.consumed_location, entry.consumption_company, entry.feeling_prior, entry.feeling_post, entry.self_talk, entry.other_comment]);
     res.sendStatus(200);
   } catch (error) {
     if (error instanceof Error) {
