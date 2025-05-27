@@ -60,8 +60,6 @@ function CreateEntrys() {
 
 	async function updateEntries(updatedEntry: Entry) {
 		try {
-			console.log("UPDATE DA ENTRIES");
-			console.log("updated Entry", updatedEntry);
 			setJournalEntrys(journalEntrys.map(entry =>
 				entry.id === updatedEntry.id ? { ...entry, ...updatedEntry } : entry));
 			//TODO: Replace hardcoded USERID
