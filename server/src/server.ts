@@ -26,7 +26,7 @@ const PORT = process.env.PORT;
 const saltRounds = process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS) : 10;
 
 app.use(cors({
-  origin: 'http://localhost:3000',  // Allow only localhost:3000
+  origin: 'http://localhost:3000',  // TODO: Change this when moved from DEV to PROD
   credentials: true
 }));
 
@@ -36,7 +36,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24, //one day cookie
+      secure: false,
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24, //one day cookie (Might change to a week for use case)
     }
   })
 );
@@ -60,41 +62,33 @@ db.connect();
 
 //User Logic
 
-app.get("/failedLogin", (req, res) => {
-  res.json("Not authenticated");
-});
-
-
-app.get("/authenticateUser", (req, res) => {
-  // console.log(req.user);
-  if (req.isAuthenticated()) {
-    res.json(req.user);
-    res.json("YOU ARE VALID TWIN");
-  } else {
-    res.redirect("/failedLogin");
-  }
-});
-
-app.get("/logout", (req, res, next) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect('/');
+app.post('/user/logout', (req, res) => {
+  req.logout(() => {
+    req.session.destroy((err) => {
+      res.clearCookie('connect.sid');
+      res.status(200).send('Logged out');
+    });
   });
 });
 
+app.get('/user/check-auth', (req, res) => {
+  console.log("/user/check-auth HIT");
+  if (req.isAuthenticated()) {
+    res.json(req.user);
+  } else {
+    res.status(401).json({ message: 'Not authenticated' });
+  }
+});
 
 app.post(
-  "/login",
+  "/user/login",
   passport.authenticate("local", {
-    successRedirect: "/authenticateUser",
-    failureRedirect: "/failedLogin",
+    successRedirect: "/user/check-auth",
+    failureRedirect: "/user/check-auth",
   })
 );
 
-
-app.post("/register", async (req, res) => {
+app.post("/user/register", async (req, res) => {
   const fName = req.body.fName;
   const lName = req.body.lName;
   const email = req.body.username;
