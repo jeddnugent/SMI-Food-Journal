@@ -1,4 +1,4 @@
-import "../styles/App.css";
+import "./styles/App.css";
 
 import { type Navigation, type Session } from "@toolpad/core/AppProvider";
 import { createTheme } from "@mui/material/styles";
@@ -15,7 +15,17 @@ import { logout } from "./api/users";
 
 
 function App() {
-
+	const [user, setUser] = useUser();
+	const navigate = useNavigate();
+	const SMITheme = createTheme({
+		colorSchemes: { light: true },
+		palette: {
+			primary: {
+				main: '#2d2f79',
+				contrastText: '#000000',
+			},
+		},
+	});
 	const NAVIGATION: Navigation = [
 		// {
 		//   kind: 'header',
@@ -28,46 +38,64 @@ function App() {
 		},
 		{
 			segment: 'journal-overview',
-			title: 'Journal Overview',
+			title: 'Overview',
 			icon: <CalendarMonthOutlinedIcon />,
 		},
 	];
 
-const SMITheme = createTheme({
-  colorSchemes: { light: true },
-	palette: {
-    primary: {
-      main: '#2d2f79',
-      contrastText: '#000000',
-    },
-    // Add more custom colors as needed
-  },
-});
+	const handleLogout = async () => {
+		try {
+			await logout();
+			setUser(null);
+		} catch (err) {
+			console.error('Logout failed', err);
+		}
+	};
 
+	const account = user
+		? {
+			user: {
+				name: user.f_name,
+				email: user.email || '',
+			},
+		}
+		: null;
+
+	const authentication = useMemo(() => {
+		return {
+			signIn: () => {
+				if (!user) {
+					navigate('/login-signup');
+				} else {
+					const session: Session = {
+						user: {
+							name: user.f_name,
+							email: user.email,
+						},
+					};
+					return session;
+				}
+			},
+			signOut: async () => {
+				handleLogout();
+			},
+		};
+	}, []);
 
 	return (
-		<div className="App">
-			<BrowserRouter>
-				<AppProvider
-					navigation={NAVIGATION}
-					theme={SMITheme}
-					branding={{
-						logo: <img src="https://successfulminds.com.au/wp-content/uploads/2019/09/web-200.png" alt="SMI logo" />,
-						title: 'SMI Food Journal',
-						homeUrl: '/',
-					}}
-				>
-					<DashboardLayout>
-						<Routes>
-							<Route path="/" element={<Navigate to="/login-signup" replace />} />
-							<Route path="/create-new-entry" element={<CreateEntrys />} />
-							<Route path="/login-signup" element={<LoginSignUp />} />
-							<Route path="/journal-overview" element={<JournalOverview />} />
-						</Routes>
-					</DashboardLayout>
-				</AppProvider>
-			</BrowserRouter>
-		</div>
+		<ReactRouterAppProvider
+			navigation={NAVIGATION}
+			theme={SMITheme}
+			session={account}
+			authentication={authentication}
+			branding={{
+				logo: <img src="https://successfulminds.com.au/wp-content/uploads/2019/09/web-200.png" alt="SMI logo" />,
+				title: 'SMI Food Journal',
+				homeUrl: '/create-new-entry',
+			}}
+		>
+			<Outlet />
+		</ReactRouterAppProvider >
 	);
 }
 
