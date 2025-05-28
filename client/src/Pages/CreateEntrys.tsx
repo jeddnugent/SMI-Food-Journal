@@ -11,9 +11,13 @@ function CreateEntrys() {
 
 	const [journalEntrys, setJournalEntrys] = useState<Entry[]>([]);
 
+	function getCurrentDate() {
+		return new Date().toISOString().split('T')[0];
+	}
+
 	async function fetchAllUserData() {
 		try {
-			const currentDate = new Date().toISOString().split('T')[0];
+			const currentDate = getCurrentDate();
 			const result = await getAllUserEntrysDate(USERID, currentDate);
 			if (result.data.length > 0) {
 				const userData: Entry[] = result.data;
@@ -45,7 +49,6 @@ function CreateEntrys() {
 	}
 
 	async function deleteEntryTapped(id: number) {
-		console.log(id);
 		try {
 			setJournalEntrys(prevEntrys => {
 				return prevEntrys.filter((entry) => { return entry.id !== id; });
@@ -58,13 +61,23 @@ function CreateEntrys() {
 		}
 	}
 
-	async function updateEntries(updatedEntry: Entry) {
+	async function updateEntryTapped(updatedEntry: Entry) {
 		try {
-			setJournalEntrys(journalEntrys.map(entry =>
-				entry.id === updatedEntry.id ? { ...entry, ...updatedEntry } : entry));
-			//TODO: Replace hardcoded USERID
-			await updateEntry(USERID, updatedEntry.id!, updatedEntry);
-			await fetchAllUserData();
+			//Check entry is still the current date
+			const currentDate = getCurrentDate();
+			console.log(currentDate, updatedEntry.item_date);
+			if (updatedEntry.item_date === currentDate) {
+				setJournalEntrys(journalEntrys.map(entry =>
+					entry.id === updatedEntry.id ? { ...entry, ...updatedEntry } : entry));
+				//TODO: Replace hardcoded USERID
+				await updateEntry(USERID, updatedEntry.id!, updatedEntry);
+				await fetchAllUserData();
+			}
+			else {
+				await updateEntry(USERID, updatedEntry.id!, updatedEntry);
+				deleteEntryTapped(updatedEntry.id!);
+			}
+
 		} catch (error) {
 			console.error('API entryListEdited Error:', error);
 		}
@@ -86,7 +99,7 @@ function CreateEntrys() {
 									key={index}
 									entry={jorunalEntry}
 									deleteEntry={deleteEntryTapped}
-									updateEntryList={updateEntries}
+									updateEntryList={updateEntryTapped}
 								/>
 							))
 							: <p>No entries found or loading...</p>
