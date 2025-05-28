@@ -1,4 +1,8 @@
-*{
+.MuiBreadcrumbs-root {
+  display: none;
+}
+
+* {
   font-family: 'Montserrat', sans-serif;
 }
 
