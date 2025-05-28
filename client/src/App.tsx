@@ -1,15 +1,18 @@
-import "./styles/App.css";
-import { BrowserRouter } from 'react-router-dom';
-import CreateEntrys from './Pages/CreateEntrys';
-import LoginSignUp from "./components/LoginSignUp";
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { AppProvider, type Navigation } from "@toolpad/core/AppProvider";
+import "../styles/App.css";
+
+import { type Navigation, type Session } from "@toolpad/core/AppProvider";
 import { createTheme } from "@mui/material/styles";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-import JournalOverview from "./Pages/JournalOverview";
+import { ReactRouterAppProvider } from '@toolpad/core/react-router';
+
+import { useNavigate, Outlet } from 'react-router-dom';
+import { useMemo } from "react";
+
+import { useUser } from "./contexts/UserContext";
+import { logout } from "./api/users";
+
+
 
 function App() {
 
