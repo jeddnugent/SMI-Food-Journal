@@ -7,6 +7,7 @@ import CreateEntrys from './Pages/CreateEntrys';
 import JournalOverview from './Pages/JournalOverview';
 import LoginSignUp from './Pages/LoginSignUp';
 import { UserProvider } from './contexts/UserContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 
@@ -18,8 +19,9 @@ const router = createBrowserRouter([
       {
         element: <DashboardLayoutWrapper />,
         children: [
-          { path: 'create-new-entry', element: <CreateEntrys /> },
-          { path: 'journal-overview', element: <JournalOverview /> },
+          { path: '', element: <ProtectedRoute><CreateEntrys /></ProtectedRoute> },
+          { path: 'create-new-entry', element: <ProtectedRoute><CreateEntrys /></ProtectedRoute> },
+          { path: 'journal-overview', element: <ProtectedRoute><JournalOverview /></ProtectedRoute> },
           { path: 'login-signup', element: <LoginSignUp /> }
         ],
       },
