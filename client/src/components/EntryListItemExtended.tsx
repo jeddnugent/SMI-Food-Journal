@@ -10,7 +10,7 @@ import "../styles/EntryListItemExtended.css";
 function EntryListItemExtended(props: {
 	entry: Entry;
 	deleteEntry: (id: number) => void;
-	updateEntryList: () => void;
+	updateEntryList: (entry: Entry) => void;
 }) {
 
 	const dateShortend = props.entry.item_date ? props.entry.item_date.substring(0, 10) : "";

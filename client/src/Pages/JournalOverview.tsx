@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Entry } from "../interfaces/Entry";
-import { getAllUserEntrys, postNewEntry, deleteEntry } from '../api/entrys';
+import { getAllUserEntrys, postNewEntry, deleteEntry, updateEntry } from '../api/entrys';
 
 
 import EntryListItemExtended from "../components/EntryListItemExtended";
@@ -45,6 +45,20 @@ function JournalOverview() {
 		}
 	}
 
+	async function updateEntryTapped(updatedEntry: Entry) {
+		try {
+
+			setJournalEntrys(journalEntrys.map(entry =>
+				entry.id === updatedEntry.id ? { ...entry, ...updatedEntry } : entry));
+			//TODO: Replace hardcoded USERID
+			await updateEntry(user!.id, updatedEntry.id!, updatedEntry);
+			await fetchAllUserData();
+		}
+		catch (error) {
+			console.error('API entryListEdited Error:', error);
+		}
+	}
+
 
 	return (
 		<div>
@@ -56,7 +70,7 @@ function JournalOverview() {
 							key={index}
 							entry={jorunalEntry}
 							deleteEntry={deleteEntryTapped}
-							updateEntryList={fetchAllUserData}
+							updateEntryList={updateEntryTapped}
 						/>
 					))
 					: <p>No entries found or loading...</p>
