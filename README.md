@@ -1,10 +1,9 @@
 # **SMI Food Journal**
 
 SMI Food Journal is a full stack project created for [Successful Minds Institute](https://successfulminds.com.au). 
-The purpose of the journal is to allow clients of SMI to track each meal they eat over the course of a week where they will
-answer a series of prompts regarding their mood and the enviroment around the meal which then will be accessed by practitioners on a subsequent consultation.
-The information gained by these surveys will then help inform futher advice and treatment as this program will aid the first step for weight loss clients.
-This information allows practitioners to best help their journies through hypnotic laparoscopic banding.
+The purpose of the journal is to allow clients of SMI to track each meal they eat over the course of a week. After each meal they will
+answer a series of prompts regarding their mood and the enviroment around the meal. This will then be accessed by practitioners on a subsequent consultation.
+The information gained by these surveys will be help inform futher advice and treatment from the practitioners regarding the clients weight loss journey.
 
 ---
 
