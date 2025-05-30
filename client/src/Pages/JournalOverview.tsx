@@ -1,45 +1,26 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import type { Entry } from "../interfaces/Entry";
-import { getAllUserEntrys, postNewEntry, deleteEntry, updateEntry } from '../api/entrys';
+import { useEntries, useUser } from "../contexts/UserContext";
 
 
 import EntryListItemExtended from "../components/EntryListItemExtended";
 
 
 function JournalOverview() {
-
-	const [journalEntrys, setJournalEntrys] = useState<Entry[]>([]);
-
-	//TODO: Replace hardcoded UserID with data after login completetion 
-	const USERID = "11111111-1111-1111-1111-111111111111";
-	async function fetchAllUserData() {
-		try {
-			const result = await getAllUserEntrys(USERID);
-			if (result.data.length > 0) {
-				const userData: Entry[] = result.data;
-				setJournalEntrys(userData);
-			}
-		} catch (error) {
-			console.error('API fetchAllUserData Error:', error);
-		}
-	}
-
+	const { user, loading } = useUser();
+	const { entries, setEntries, refreshEntries, refreshSpecifcEntry, deleteEntry } = useEntries();
 
 	useEffect(() => {
-		//TODO: Replace USERID with current user data
-		fetchAllUserData();
-	}, []);
-
+		if (loading === false) {
+			refreshEntries();
+		}
+	}, [loading]);
 
 	async function deleteEntryTapped(id: number) {
 		console.log(id);
+		if (!user) return;
 		try {
-			setJournalEntrys(prevEntrys => {
-				return prevEntrys.filter((entry) => { return entry.id !== id; });
-			});
-			// TODO: Replace USERID
-			await deleteEntry(USERID, id);
-			await fetchAllUserData();
+			deleteEntry(id);
 		} catch (error) {
 			console.error('API deleteEntry Error:', error);
 		}
@@ -47,25 +28,19 @@ function JournalOverview() {
 
 	async function updateEntryTapped(updatedEntry: Entry) {
 		try {
-
-			setJournalEntrys(journalEntrys.map(entry =>
-				entry.id === updatedEntry.id ? { ...entry, ...updatedEntry } : entry));
-			//TODO: Replace hardcoded USERID
-			await updateEntry(user!.id, updatedEntry.id!, updatedEntry);
-			await fetchAllUserData();
+			refreshSpecifcEntry(updatedEntry);
 		}
 		catch (error) {
 			console.error('API entryListEdited Error:', error);
 		}
 	}
 
-
 	return (
 		<div>
 			<h1>Journal Overview</h1>
 			<ul className='EntryList'>
-				{Array.isArray(journalEntrys)
-					? journalEntrys.map((jorunalEntry: Entry, index) => (
+				{Array.isArray(entries)
+					? entries.map((jorunalEntry: Entry, index) => (
 						<EntryListItemExtended
 							key={index}
 							entry={jorunalEntry}
