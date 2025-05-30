@@ -72,7 +72,6 @@ app.post('/user/logout', (req, res) => {
 });
 
 app.get('/user/check-auth', (req, res) => {
-  console.log("/user/check-auth HIT");
   if (req.isAuthenticated()) {
     res.json(req.user);
   } else {
@@ -113,8 +112,7 @@ app.post("/user/register", async (req, res) => {
           );
           const user = result.rows[0];
           req.login(user, (err) => {
-            console.log("register success");
-            res.redirect("/authenticateUser");
+            res.redirect('/user/check-auth');
           });
         }
       });
@@ -162,6 +160,7 @@ app.get("/entry/:userId", async (req: Request, res: Response) => {
       return;
     }
     res.json(foundEntries);
+
   } catch (error) {
     if (error instanceof Error) {
       console.error('Database Error:', error.message);
@@ -229,6 +228,7 @@ app.put("/entry/:userId/:id", async (req: Request, res: Response) => {
     await db.query
       ("UPDATE entrys SET item_date = $3, time_consumed = $4, item_desc = $5, consumed_location = $6, consumption_company = $7, feeling_prior = $8, feeling_post = $9, self_talk = $10, other_comment = $11 WHERE user_id = $1 AND id = $2",
         [userId, id, entry.item_date, entry.time_consumed, entry.item_desc, entry.consumed_location, entry.consumption_company, entry.feeling_prior, entry.feeling_post, entry.self_talk, entry.other_comment]);
+    res.status(200).json("Entry Updated");
   } catch (error) {
     if (error instanceof Error) {
       console.error('Database Error:', error.message);
