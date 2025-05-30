@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from "react";
-import { type PropsWithChildren, type ReactNode, useEffect } from "react";
+import { type PropsWithChildren, useEffect } from "react";
 import type { User } from "../interfaces/User";
 import { checkAuth } from "../api/users";
 import { getAllUserEntrys, updateEntry, getAllUserEntrysDate, deleteUserEntry, postNewEntry } from "../api/entrys";

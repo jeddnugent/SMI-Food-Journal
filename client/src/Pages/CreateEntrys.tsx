@@ -7,8 +7,8 @@ import { useUser, useEntries } from '../contexts/UserContext';
 import "../styles/CreateEntrys.css";
 
 function CreateEntrys() {
-	const { user, loading } = useUser();
-	const { todayEntries, setTodayEntries, refreshEntries, refreshSpecifcEntry, deleteEntry, addEntry } = useEntries();
+	const { loading } = useUser();
+	const { todayEntries, refreshEntries, refreshSpecifcEntry, deleteEntry, addEntry } = useEntries();
 
 	useEffect(() => {
 		if (loading === false) {
@@ -17,7 +17,6 @@ function CreateEntrys() {
 	}, [loading]);
 
 	async function addEntryTapped(newEntry: Entry) {
-		if (!user) return;
 		try {
 			addEntry(newEntry);
 		} catch (error) {
@@ -27,8 +26,6 @@ function CreateEntrys() {
 	}
 
 	async function deleteEntryTapped(id: number) {
-		console.log(id);
-		if (!user) return;
 		try {
 			deleteEntry(id);
 		} catch (error) {

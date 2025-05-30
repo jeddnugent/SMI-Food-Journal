@@ -79,6 +79,7 @@ function App() {
 			},
 			signOut: async () => {
 				handleLogout();
+				navigate('/login-signup');
 			},
 		};
 	}, []);

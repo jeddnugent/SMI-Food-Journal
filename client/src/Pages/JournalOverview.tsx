@@ -7,8 +7,8 @@ import EntryListItemExtended from "../components/EntryListItemExtended";
 
 
 function JournalOverview() {
-	const { user, loading } = useUser();
-	const { entries, setEntries, refreshEntries, refreshSpecifcEntry, deleteEntry } = useEntries();
+	const { loading } = useUser();
+	const { entries, refreshEntries, refreshSpecifcEntry, deleteEntry } = useEntries();
 
 	useEffect(() => {
 		if (loading === false) {
@@ -17,8 +17,6 @@ function JournalOverview() {
 	}, [loading]);
 
 	async function deleteEntryTapped(id: number) {
-		console.log(id);
-		if (!user) return;
 		try {
 			deleteEntry(id);
 		} catch (error) {

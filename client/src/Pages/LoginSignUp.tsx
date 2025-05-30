@@ -1,22 +1,19 @@
 import { useState } from 'react';
 import EmailIcon from '@mui/icons-material/Email';
 import HttpsIcon from '@mui/icons-material/Https';
-import PersonIcon from '@mui/icons-material/Person';
-import "../styles/LoginSignUp.css";
+import { useNavigate } from 'react-router-dom';
 import type { Credentials } from '../interfaces/Credentials';
 import { login } from "../api/users";
-// import { useUser } from '../contexts/useUser';
 import { useUser } from '../contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
-
+import "../styles/LoginSignUp.css";
 
 function LoginSignUp() {
-	const [action, setAction] = useState("Login");
+	const [action, setAction] = useState("Log in");
 	const [creds, setCreds] = useState({
 		username: "",
 		password: "",
 	});
-	const { user, setUser } = useUser();
+	const { setUser } = useUser();
 	const navigate = useNavigate();
 
 	function handleCredentialsChanged(event: { target: { name: string; value: string; }; }) {
@@ -25,7 +22,6 @@ function LoginSignUp() {
 			return ({ ...currentCreds, [name]: value });
 		});
 	}
-
 
 	async function logInActioned() {
 		//TODO: Add Error Handling for when credentials are incorrect
@@ -36,7 +32,6 @@ function LoginSignUp() {
 		setUser(result.data);
 		navigate('/create-new-entry');
 	}
-
 
 	return (
 		<div className='LoginSignUpContainer'>

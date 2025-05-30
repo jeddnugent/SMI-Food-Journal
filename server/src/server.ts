@@ -11,11 +11,6 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import session from "express-session";
 
-//TODO: Adapt code with express routes
-//TODO: Create services file for buisness logic and to tap into SQL
-//TODO: possibly change interfaces to modles, need to check style guides for file structure hiracrchy
-//TODO: Add in proper Auth
-
 // Add dynamic env assignment
 dotnev.config({
   path: `.env.development`
