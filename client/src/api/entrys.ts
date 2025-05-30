@@ -18,5 +18,5 @@ export const postNewEntry = (userId: string, data: Entry) =>
 export const updateEntry = (userId: string, id: number, data: Entry) =>
   axios.put(`${API_URL}/entry/${userId}/${id}`, data);
 
-export const deleteEntry = (userId: string, id: number) =>
+export const deleteUserEntry = (userId: string, id: number) =>
   axios.delete(`${API_URL}/entry/${userId}/${id}`);
