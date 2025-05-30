@@ -11,14 +11,12 @@ import { useNavigate } from 'react-router-dom';
 
 
 function LoginSignUp() {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
 	const [action, setAction] = useState("Login");
 	const [creds, setCreds] = useState({
 		username: "",
 		password: "",
 	});
-	const [user, setUser] = useUser();
+	const { user, setUser } = useUser();
 	const navigate = useNavigate();
 
 	function handleCredentialsChanged(event: { target: { name: string; value: string; }; }) {
@@ -30,13 +28,12 @@ function LoginSignUp() {
 
 
 	async function logInActioned() {
-		setAction("Log in");
+		//TODO: Add Error Handling for when credentials are incorrect
 		const credentials: Credentials = creds;
 		console.log("actioned credentials", credentials);
 		const result = await login(credentials.username, credentials.password);
 		console.log(result.data);
 		setUser(result.data);
-		console.log(user);
 		navigate('/create-new-entry');
 	}
 
