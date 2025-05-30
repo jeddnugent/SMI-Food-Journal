@@ -15,8 +15,9 @@ import { logout } from "./api/users";
 
 
 function App() {
-	const [user, setUser] = useUser();
+	const { user, setUser } = useUser();
 	const navigate = useNavigate();
+
 	const SMITheme = createTheme({
 		colorSchemes: { light: true },
 		palette: {
