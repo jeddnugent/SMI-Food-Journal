@@ -134,9 +134,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 		}
 	};
 
-
-
-
 	return (
 		<UserContext.Provider value={{ user, setUser, loading, error }}>
 			<EntryContext.Provider value={{ entries, setEntries, refreshEntries, refreshSpecifcEntry, deleteEntry, addEntry, todayEntries, setTodayEntries }}>
