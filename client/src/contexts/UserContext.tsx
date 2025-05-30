@@ -87,6 +87,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 				const userData: Entry[] = todayEntryResult.data;
 				setTodayEntries(userData);
 			}
+			else {
+				setTodayEntries([]);
+			}
+
 		} catch (error) {
 			console.error('API refreshEntries Error:', error);
 		}
