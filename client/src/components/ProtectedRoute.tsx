@@ -6,14 +6,14 @@ import { useUser } from "../contexts/UserContext";
 type ProtectedRouteProps = PropsWithChildren;
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-	const user = useUser();
+	const { user, loading } = useUser();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (user[0] === null) {
+		if (!user && !loading) {
 			navigate("/login-signup", { replace: true });
 		}
-	});
+	}, [user, loading]);
 
 	return children;
 };
