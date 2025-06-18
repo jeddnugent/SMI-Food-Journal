@@ -44,16 +44,24 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-const db = new pg.Client({
-  user: process.env.DATABASE_USER,
-  host: process.env.DATABASE_HOST,
-  database: process.env.DATABASE,
-  password: process.env.DATABASE_PASSWORD,
-  port: process.env.DATABASE_PORT ? parseInt(process.env.DATABASE_PORT) : 5432,
-});
+const dbUrl = new URL(process.env.DATABASE_URL!);
 
+const db = new pg.Client({
+  user: dbUrl.username,
+  host: dbUrl.hostname,
+  database: dbUrl.pathname.slice(1), // remove leading slash
+  password: dbUrl.password,
+  port: parseInt(dbUrl.port),
+  ssl: {
+    rejectUnauthorized: false, // Railway may need this to avoid SSL errors
+  },
+});
 db.connect();
 
+//dummy express route 
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end();
+});
 
 //User Logic
 
