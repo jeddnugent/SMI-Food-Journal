@@ -8,7 +8,7 @@ import { useUser } from '../contexts/UserContext';
 import "../styles/LoginSignUp.css";
 
 function LoginSignUp() {
-	const [action, setAction] = useState("Log in");
+	const [action] = useState("Log in");
 	const [creds, setCreds] = useState({
 		username: "",
 		password: "",

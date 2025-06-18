@@ -8,8 +8,6 @@ import LabelTextArea from './LabelTextArea';
 
 import type { Entry } from '../interfaces/Entry';
 
-import { updateEntry } from '../api/entrys';
-
 export default function FormDialog(props: {
   editOpen: boolean;
   entry: Entry;
