@@ -13,15 +13,14 @@ dotnev.config({
   path: `.env.development`
 });
 
+const app = express();
+const PORT = process.env.PORT;
+const saltRounds = process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS) : 10;
 
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true
 }));
-
-const app = express();
-const PORT = process.env.PORT;
-const saltRounds = process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS) : 10;
 
 app.use(
   session({
