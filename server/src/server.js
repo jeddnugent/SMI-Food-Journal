@@ -1,9 +1,6 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import pg from 'pg';
 import dotnev from "dotenv";
-
-import type { Entry } from './interfaces/Entry';
-import User from "./interfaces/User";
 
 import cors from 'cors';
 import bcrypt from "bcrypt";
@@ -27,7 +24,7 @@ app.use(cors({
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET!.toString(),
+    secret: process.env.SESSION_SECRET.toString(),
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -44,7 +41,7 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-const dbUrl = new URL(process.env.DATABASE_URL!);
+const dbUrl = new URL(process.env.DATABASE_URL);
 
 const db = new pg.Client({
   user: dbUrl.username,
@@ -128,12 +125,12 @@ app.post("/user/register", async (req, res) => {
 //Entry Logic
 
 //GET an entry of a specific ID
-app.get("/entry/:userId/:id", async (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id);
-  const userId: string = req.params.userId;
+app.get("/entry/:userId/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const userId = req.params.userId;
   try {
     const result = await db.query("SELECT * FROM entrys WHERE id = $1 AND user_id = $2", [id, userId]);
-    const foundEntry: Entry[] = result.rows;
+    const foundEntry = result.rows;
 
     if (foundEntry.length === 0) {
       res.status(404).json({ error: "Entry not found" });
@@ -153,11 +150,11 @@ app.get("/entry/:userId/:id", async (req: Request, res: Response) => {
 });
 
 //GET all entries for a user
-app.get("/entry/:userId", async (req: Request, res: Response) => {
-  const userId: string = req.params.userId;
+app.get("/entry/:userId", async (req, res) => {
+  const userId = req.params.userId;
   try {
     const result = await db.query("SELECT * FROM entrys WHERE user_id = $1", [userId]);
-    const foundEntries: Entry[] = result.rows;
+    const foundEntries = result.rows;
     if (foundEntries.length < -1) {
       res.status(404).json({ error: "This user has no entrys recorded" });
       return;
@@ -177,12 +174,12 @@ app.get("/entry/:userId", async (req: Request, res: Response) => {
 
 
 //GET all entries for a user given a specific date
-app.get("/entry/date/:userId/:date", async (req: Request, res: Response) => {
-  const userId: string = req.params.userId;
-  const date: string = req.params.date;
+app.get("/entry/date/:userId/:date", async (req, res) => {
+  const userId = req.params.userId;
+  const date = req.params.date;
   try {
     const result = await db.query("SELECT * FROM entrys WHERE user_id = $1 AND item_date = $2", [userId, date]);
-    const foundEntries: Entry[] = result.rows;
+    const foundEntries = result.rows;
     if (foundEntries.length < -1) {
       res.status(404).json({ error: "This user has no entrys recorded" });
       return;
@@ -200,9 +197,9 @@ app.get("/entry/date/:userId/:date", async (req: Request, res: Response) => {
 });
 
 // POST New Entry
-app.post("/entry/:userId", async (req: Request, res: Response) => {
-  const userId: string = req.params.userId;
-  const entry: Entry = req.body;
+app.post("/entry/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  const entry = req.body;
 
   //TODO: Add validation for new user
 
@@ -222,10 +219,10 @@ app.post("/entry/:userId", async (req: Request, res: Response) => {
 });
 
 //PATCH Update Entry
-app.put("/entry/:userId/:id", async (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id);
-  const userId: string = req.params.userId;
-  const entry: Entry = req.body;
+app.put("/entry/:userId/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const userId = req.params.userId;
+  const entry = req.body;
 
   try {
     await db.query
@@ -244,12 +241,12 @@ app.put("/entry/:userId/:id", async (req: Request, res: Response) => {
 });
 
 //DELETE Specifc Entry
-app.delete("/entry/:userId/:id", async (req: Request, res: Response) => {
-  const userId: string = req.params.userId;
-  const id: number = parseInt(req.params.id);
+app.delete("/entry/:userId/:id", async (req, res) => {
+  const userId = req.params.userId;
+  const id = parseInt(req.params.id);
   try {
     await db.query("DELETE FROM entrys WHERE user_id = $1 AND id = $2", [userId, id]);
-  } catch (error: unknown) {
+  } catch (error) {
     if (error instanceof Error) {
       console.error('Database Error:', error.message);
       res.status(400).json({ error: error.message });
@@ -296,7 +293,7 @@ passport.use(
 passport.serializeUser((user, cb) => {
   cb(null, user);
 });
-passport.deserializeUser((user: Express.User, cb: (err: any, user?: Express.User | false | null) => void) => {
+passport.deserializeUser((user, cb) => {
   cb(null, user);
 });
 

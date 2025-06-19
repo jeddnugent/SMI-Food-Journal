@@ -3,24 +3,19 @@
     "@eslint/js": "^9.26.0",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.18",
-    "@types/express": "^5.0.3",
     "@types/express-session": "^1.18.1",
-    "@types/node": "^22.15.10",
     "@types/passport": "^1.0.17",
     "@types/passport-local": "^1.0.38",
     "@types/pg": "^8.15.1",
     "eslint": "^9.26.0",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.0.0",
-    "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.8.3",
+    "nodemon": "^3.1.10",
     "typescript-eslint": "^8.32.0"
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
