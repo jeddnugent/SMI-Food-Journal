@@ -74,6 +74,8 @@ app.post('/user/logout', (req, res) => {
 });
 
 app.get('/user/check-auth', (req, res) => {
+  console.log('Session:', req.session);
+  console.log('User:', req.user);
   if (req.isAuthenticated()) {
     res.json(req.user);
   } else {
