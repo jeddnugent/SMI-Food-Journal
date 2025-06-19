@@ -18,7 +18,7 @@ const PORT = process.env.PORT;
 const saltRounds = process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS) : 10;
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL,  // TODO: Change this when moved from DEV to PROD
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
@@ -28,7 +28,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
+      sameSite: "none",
+      secure: true,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24, //one day cookie (Might change to a week for use case)
     }
