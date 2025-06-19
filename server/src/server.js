@@ -18,7 +18,7 @@ const PORT = process.env.PORT;
 const saltRounds = process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS) : 10;
 
 app.use(cors({
-  origin: 'http://localhost:3000',  // TODO: Change this when moved from DEV to PROD
+  origin: process.env.FRONTEND_URL,  // TODO: Change this when moved from DEV to PROD
   credentials: true
 }));
 
