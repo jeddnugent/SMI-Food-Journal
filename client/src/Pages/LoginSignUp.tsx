@@ -10,7 +10,7 @@ import "../styles/LoginSignUp.css";
 function LoginSignUp() {
 	const [action] = useState("Log in");
 	const [creds, setCreds] = useState({
-		username: "jeddnugent@gmail.com",
+		username: "",
 		password: "test",
 	});
 	const { setUser } = useUser();
@@ -45,11 +45,11 @@ function LoginSignUp() {
 			<div className="inputs">
 				<div className="input">
 					<EmailIcon className='img' />
-					<input type="email" name="username" id="username" placeholder='Email' onChange={handleCredentialsChanged} value={creds.username} />
+					<input type="email" name="username" id="username" placeholder='jeddnugent@gmail.com' onChange={handleCredentialsChanged} value={creds.username} />
 				</div>
 				<div className="input">
 					<HttpsIcon className='img' />
-					<input type="password" name="password" id="password" placeholder='Password' onChange={handleCredentialsChanged} value={creds.password} />
+					<input type="password" name="password" id="password" placeholder='test' onChange={handleCredentialsChanged} value={creds.password} />
 				</div>
 			</div>
 			<div className="submitContainer">
