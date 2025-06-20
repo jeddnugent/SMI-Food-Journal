@@ -18,7 +18,7 @@ const PORT = process.env.PORT;
 const saltRounds = process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS) : 10;
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: "https://smi-food-journal.vercel.app",
   credentials: true
 }));
 
@@ -82,13 +82,27 @@ app.get('/user/check-auth', (req, res) => {
   }
 });
 
-app.post(
-  "/user/login",
-  passport.authenticate("local", {
-    successRedirect: "/user/check-auth",
-    failureRedirect: "/user/check-auth",
-  })
-);
+// app.post(
+//   "/user/login",
+//   passport.authenticate("local", {
+//     successRedirect: "/user/check-auth",
+//     failureRedirect: "/user/check-auth",
+//   })
+// );
+
+app.post('/user/login', (req, res, next) => {
+  passport.authenticate('local', (err, user) => {
+    if (err) return next(err);
+    if (!user) return res.status(401).json({ message: 'Invalid credentials' });
+
+    // This attaches the user to the session & sets the cookie
+    req.login(user, err => {
+      if (err) return next(err);
+      // Optional: send back user info
+      return res.json({ message: 'Login successful', user });
+    });
+  })(req, res, next);
+});
 
 app.post("/user/register", async (req, res) => {
   const fName = req.body.fName;
@@ -294,7 +308,7 @@ passport.use(
 );
 
 passport.serializeUser((user, cb) => {
-  cb(null, user.id);
+  cb(null, user);
 });
 passport.deserializeUser((user, cb) => {
   cb(null, user);
