@@ -10,8 +10,8 @@ import "../styles/LoginSignUp.css";
 function LoginSignUp() {
 	const [action] = useState("Log in");
 	const [creds, setCreds] = useState({
-		username: "",
-		password: "",
+		username: "jeddnugent@gmail.com",
+		password: "test",
 	});
 	const { setUser } = useUser();
 	const navigate = useNavigate();
@@ -26,9 +26,7 @@ function LoginSignUp() {
 	async function logInActioned() {
 		//TODO: Add Error Handling for when credentials are incorrect
 		const credentials: Credentials = creds;
-		console.log("actioned credentials", credentials);
 		const result = await login(credentials.username, credentials.password);
-		console.log(result.data);
 		setUser(result.data.user);
 		navigate('/create-new-entry');
 	}
