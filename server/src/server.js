@@ -18,7 +18,7 @@ const PORT = process.env.PORT;
 const saltRounds = process.env.SALTROUNDS ? parseInt(process.env.SALTROUNDS) : 10;
 
 app.use(cors({
-  origin: "https://smi-food-journal.vercel.app",
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
@@ -47,11 +47,11 @@ const dbUrl = new URL(process.env.DATABASE_URL);
 const db = new pg.Client({
   user: dbUrl.username,
   host: dbUrl.hostname,
-  database: dbUrl.pathname.slice(1), // remove leading slash
+  database: dbUrl.pathname.slice(1),
   password: dbUrl.password,
   port: parseInt(dbUrl.port),
   ssl: {
-    rejectUnauthorized: false, // Railway may need this to avoid SSL errors
+    rejectUnauthorized: false,
   },
 });
 db.connect();
@@ -80,23 +80,12 @@ app.get('/user/check-auth', (req, res) => {
   }
 });
 
-// app.post(
-//   "/user/login",
-//   passport.authenticate("local", {
-//     successRedirect: "/user/check-auth",
-//     failureRedirect: "/user/check-auth",
-//   })
-// );
-
 app.post('/user/login', (req, res, next) => {
   passport.authenticate('local', (err, user) => {
     if (err) return next(err);
     if (!user) return res.status(401).json({ message: 'Invalid credentials' });
-
-    // This attaches the user to the session & sets the cookie
     req.login(user, err => {
       if (err) return next(err);
-      // Optional: send back user info
       return res.json({ message: 'Login successful', user });
     });
   })(req, res, next);
