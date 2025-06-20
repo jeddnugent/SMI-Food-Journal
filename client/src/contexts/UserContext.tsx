@@ -46,7 +46,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 			try {
 				const userResult = await checkAuth();
 				setUser(userResult.data);
-				console.log("Context User", user);
 
 				const entryResult = await getAllUserEntrys(user!.id);
 				if (entryResult.data.length > 0) {
@@ -82,7 +81,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
 			const currentDate = new Date().toISOString().split('T')[0];
 			const todayEntryResult = await getAllUserEntrysDate(user!.id, currentDate);
-			console.log("entryResult", todayEntryResult);
 			if (todayEntryResult.data.length > 0) {
 				const userData: Entry[] = todayEntryResult.data;
 				setTodayEntries(userData);

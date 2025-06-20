@@ -22,17 +22,12 @@ export default function FormDialog(props: {
 
   function handleTextAreaChanged(event: { target: { name: string; value: string; }; }) {
     const { name, value } = event.target;
-    if (name === "itemDate") {
-      console.log("Date at input" + value);
-    }
     setUpdatedEntry(currentEntry => {
       return ({ ...currentEntry, [name]: value });
     });
   }
 
   async function onSubmit() {
-    console.log(updatedEntry);
-    //TODO: Replace test user data
     props.updateEntryList(updatedEntry);
     props.handleClose();
   }

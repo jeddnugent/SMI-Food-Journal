@@ -19,7 +19,6 @@ function EntryListItem(props: {
 	const [editOpen, setEditOpen] = useState(false);
 
 	const handleEditOpen = () => {
-		console.log("edit tapped");
 		setEditOpen(true);
 	};
 
