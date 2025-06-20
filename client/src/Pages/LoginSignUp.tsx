@@ -10,7 +10,7 @@ import "../styles/LoginSignUp.css";
 function LoginSignUp() {
 	const [action] = useState("Log in");
 	const [creds, setCreds] = useState({
-		username: "",
+		username: "jeddnugent@gmail.com",
 		password: "test",
 	});
 	const { setUser } = useUser();
