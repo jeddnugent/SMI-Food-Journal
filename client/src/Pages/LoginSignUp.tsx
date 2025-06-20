@@ -29,7 +29,7 @@ function LoginSignUp() {
 		console.log("actioned credentials", credentials);
 		const result = await login(credentials.username, credentials.password);
 		console.log(result.data);
-		setUser(result.data);
+		setUser(result.data.user);
 		navigate('/create-new-entry');
 	}
 
