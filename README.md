@@ -1,5 +1,7 @@
 # **SMI Food Journal**
 
+Demo version of this web app can be found here [Vercel Demo](https://smi-food-journal.vercel.app). Navigate to login page if you aren't manually this error is due to a server spin down on Render for the free tier not realted to the codebase
+
 SMI Food Journal is a full stack project created for [Successful Minds Institute](https://successfulminds.com.au). 
 The purpose of the journal is to allow clients of SMI to track each meal they eat over the course of a week. After each meal they will
 answer a series of prompts regarding their mood and the enviroment around the meal. This will then be accessed by practitioners on a subsequent consultation.
@@ -39,6 +41,11 @@ The information gained by these surveys will be help inform futher advice and tr
   - Postman (for API testing)
 
 ---
+### **Demo Hosting Breakdown**
+The SMI demo is being operated through a combination of a few services:
+- Frontend: Vercel
+- Backend Express: Render
+- PostgresSQL server Neon
 
 ### **How to run solution locally**
 If you want to fully explore the functionality of this solution you can by following these steps:
