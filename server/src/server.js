@@ -1,5 +1,4 @@
 import express from "express";
-import pg from 'pg';
 import dotnev from "dotenv";
 
 import cors from 'cors';
@@ -43,23 +42,10 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// const dbUrl = new URL(process.env.DATABASE_URL);
-
-// const db = new pg.Client({
-//   user: dbUrl.username,
-//   host: dbUrl.hostname,
-//   database: dbUrl.pathname.slice(1),
-//   password: dbUrl.password,
-//   port: parseInt(dbUrl.port),
-//   ssl: {
-//     rejectUnauthorized: false,
-//   },
-// });
-// db.connect();
-
 const db = pool;
 
 //dummy express route 
+
 app.get('/favicon.ico', (req, res) => {
   res.status(204).end();
 });
