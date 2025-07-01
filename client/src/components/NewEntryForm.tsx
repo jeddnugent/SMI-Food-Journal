@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/App.css";
 import LabelTextArea from "./LabelTextArea";
-import Zoom from '@mui/material/Zoom';
+
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import "../styles/NewEntryForm.css";
@@ -69,11 +69,14 @@ function NewEntryForm(props: { createEntry: (entry: Entry) => void }) {
 					<LabelTextArea className="self_talk" onChange={handleTextAreaChanged} value={newEntry.self_talk} minRows={2} labelText="What did you say to yourself before and after you ate/drank?" />
 					<LabelTextArea className="other_comment" onChange={handleTextAreaChanged} value={newEntry.other_comment} minRows={1} labelText="Other Comments" />
 				</div>
-				<Zoom in={true}>
-					<Fab onClick={onAddClicked}>
-						<AddIcon />
-					</Fab>
-				</Zoom>
+
+
+				<Fab onClick={onAddClicked}>
+					<AddIcon />
+				</Fab>
+
+
+
 			</form>
 		</div>
 	);
