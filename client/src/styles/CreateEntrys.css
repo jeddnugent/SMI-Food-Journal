@@ -1,10 +1,15 @@
-.NewEntryContainer{
+.NewEntryContainer {
 	display: grid;
 	flex-direction: row;
 	grid-template-columns: 60% auto;
 	justify-content: center;
 }
 
-.EntryList{
+.EntryList {
 	list-style: none;
+}
+
+h3 {
+	text-align: center;
+	color: #2d2f79;
 }

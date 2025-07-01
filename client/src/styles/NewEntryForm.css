@@ -20,6 +20,11 @@ textarea {
 	resize: vertical;
 }
 
+h1 {
+	text-align: center;
+	color: #2d2f79;
+}
+
 /* Style the label to display next to the inputs */
 label {
 	padding: 12px 12px 12px 0;
@@ -27,13 +32,11 @@ label {
 }
 
 /* Style the submit button */
-input[type=submit] {
-	background-color: #04AA6D;
-	padding: 12px 20px;
-	border: none;
-	border-radius: 4px;
+form.journalForm button {
 	cursor: pointer;
-	float: right;
+	display: grid;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .timeDateContainer {
