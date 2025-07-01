@@ -49,7 +49,7 @@ function CreateEntrys() {
 					<NewEntryForm createEntry={addEntryTapped} />
 				</div>
 				<div>
-					<h3>Today's Entrys</h3>
+					<h3>Today's Entries</h3>
 					<ul className='EntryList'>
 						{Array.isArray(todayEntries) && todayEntries.length > 0
 							? todayEntries.map((jorunalEntry: Entry, index) => (
