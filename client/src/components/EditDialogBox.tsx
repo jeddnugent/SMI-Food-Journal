@@ -5,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import LabelTextArea from './LabelTextArea';
+import "../styles/EditDialogBox.css";
 
 import type { Entry } from '../interfaces/Entry';
 
@@ -48,12 +49,18 @@ export default function FormDialog(props: {
         }}
         scroll={"paper"}
       >
-        <DialogTitle>Edit Journal Entry</DialogTitle>
+        <DialogTitle className='EditTitle'>Edit Journal Entry</DialogTitle>
         <DialogContent>
-          <label htmlFor="item_date">Date </label>
-          <input type="date" id="item_date" name="item_date" onChange={handleTextAreaChanged} value={updatedEntry.item_date} />
-          <label>Time Consumed </label>
-          <input type="time" id="time_consumed" name="time_consumed" onChange={handleTextAreaChanged} value={updatedEntry.time_consumed} />
+          <div className="timeDateContainer">
+            <div>
+              <label htmlFor="item_date">Date </label>
+              <input type="date" id="item_date" name="item_date" onChange={handleTextAreaChanged} value={updatedEntry.item_date} />
+            </div>
+            <div>
+              <label>Time Consumed </label>
+              <input type="time" id="time_consumed" name="time_consumed" onChange={handleTextAreaChanged} value={updatedEntry.time_consumed} />
+            </div>
+          </div>
           <LabelTextArea className="item_desc" onChange={handleTextAreaChanged} value={updatedEntry.item_desc} minRows={1} labelText="Food/Drink Description" />
           <LabelTextArea className="consumed_location" onChange={handleTextAreaChanged} value={updatedEntry.consumed_location} minRows={1} labelText="Where were you when you ate / drank this?" />
           <LabelTextArea className="consumption_company" onChange={handleTextAreaChanged} value={updatedEntry.consumption_company} minRows={1} labelText="Who were you with at the time?" />

@@ -23,7 +23,7 @@ function App() {
 		palette: {
 			primary: {
 				main: '#2d2f79',
-				contrastText: '#000000',
+				contrastText: '#ffffff',
 			},
 		},
 	});
