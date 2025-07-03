@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { motion, AnimatePresence } from "motion/react";
 import NewEntryForm from '../components/NewEntryForm';
 import type { Entry } from '../interfaces/Entry';
 import EntryListItem from '../components/EntryListItem';
@@ -51,18 +52,27 @@ function CreateEntrys() {
 				<div>
 					<h3>Today's Entries</h3>
 					<ul className='EntryList'>
-						{Array.isArray(todayEntries) && todayEntries.length > 0
-							? todayEntries.map((jorunalEntry: Entry, index) => (
-								<EntryListItem
-									key={index}
-									entry={jorunalEntry}
-									deleteEntry={deleteEntryTapped}
-									updateEntryList={updateEntryTapped}
-								/>
-							))
-							: <p>No entries found or loading...</p>
-						}
-
+						<AnimatePresence>
+							{Array.isArray(todayEntries) && todayEntries.length > 0
+								? todayEntries.map((jorunalEntry: Entry, index) => (
+									<motion.li
+										key={index}
+										initial={{ opacity: 0, y: -10 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: -10 }}
+										transition={{ duration: 0.3, delay: index * 0.05 }}
+									>
+										<EntryListItem
+											key={index}
+											entry={jorunalEntry}
+											deleteEntry={deleteEntryTapped}
+											updateEntryList={updateEntryTapped}
+										/>
+									</motion.li>
+								))
+								: <p>No entries found or loading...</p>
+							}
+						</AnimatePresence>
 					</ul>
 				</div>
 			</div>
