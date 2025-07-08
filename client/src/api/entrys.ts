@@ -12,7 +12,7 @@ export const getAllUserEntrysDate = (userId: string, date: string) =>
   axiosInstance.get(`/entry/date/${userId}/${date}`);
 
 export const postNewEntry = (userId: string, data: Entry) =>
-  axiosInstance.post(`$/entry/${userId}`, data);
+  axiosInstance.post(`/entry/${userId}`, data);
 
 export const updateEntry = (userId: string, id: number, data: Entry) =>
   axiosInstance.put(`/entry/${userId}/${id}`, data);
