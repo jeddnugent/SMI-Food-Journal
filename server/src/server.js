@@ -297,14 +297,20 @@ passport.serializeUser((user, cb) => {
 });
 
 passport.deserializeUser(async (id, done) => {
+  console.log("DESERIALIZING USER ID:", id);
   try {
     const result = await db.query("SELECT * FROM users WHERE id = $1 ", [
       id,
     ]);
     const user = result.rows[0];
-    if (!user) return done(null, false);
+    if (!user) {
+      console.log("No user found for ID:", id);
+      return done(null, false);
+    }
+    console.log("User found:", user.username);
     return done(null, user);
   } catch (err) {
+    console.error("Error in deserializeUser:", err);
     return done(err);
   }
 });
