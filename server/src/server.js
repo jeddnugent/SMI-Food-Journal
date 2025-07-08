@@ -48,9 +48,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(passport.initialize());
+app.use((req, res, next) => {
+  console.log("Before passport.session - session ID:", req.sessionID);
+  next();
+});
 app.use(passport.session());
 
 //dummy express route 
+app.get('/debug-session', (req, res) => {
+  console.log("req.session", req.session);
+  console.log("req.session.passport", req.session?.passport);
+  res.json(req.session);
+});
 
 app.get('/favicon.ico', (req, res) => {
   res.status(204).end();
