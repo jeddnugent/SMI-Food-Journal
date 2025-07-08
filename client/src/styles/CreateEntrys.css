@@ -11,6 +11,18 @@
 	list-style: none;
 }
 
+.EntryHeading-Container {
+	display: grid;
+	grid-template-columns: 2fr repeat(8, 1fr);
+	width: 100%;
+	gap: 30px;
+}
+
+.EntryHeading-Container h4 {
+	margin: 0;
+	padding: 4px 0;
+}
+
 h3 {
 	text-align: center;
 	width: fit-content;
