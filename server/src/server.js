@@ -84,6 +84,7 @@ app.post('/user/login', (req, res, next) => {
     if (!user) return res.status(401).json({ message: 'Invalid credentials' });
     req.login(user, err => {
       if (err) return next(err);
+      console.log("Login session after storing:", req.session);
       return res.json({ message: 'Login successful', user });
     });
   })(req, res, next);
