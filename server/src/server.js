@@ -68,6 +68,9 @@ app.post('/user/logout', (req, res) => {
 });
 
 app.get('/user/check-auth', (req, res) => {
+  console.log("SESSION ID:", req.sessionID);
+  console.log("SESSION DATA:", req.session);
+  console.log("USER:", req.user);
   if (req.isAuthenticated()) {
     res.json(req.user);
   } else {
