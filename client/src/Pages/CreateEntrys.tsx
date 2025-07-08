@@ -70,7 +70,7 @@ function CreateEntrys() {
 										/>
 									</motion.li>
 								))
-								: <p>No entries found or loading...</p>
+								: <div className='Placeholder'>Today's entries are still waiting to be written.</div>
 							}
 						</AnimatePresence>
 					</ul>
