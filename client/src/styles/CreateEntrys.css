@@ -1,15 +1,41 @@
 .NewEntryContainer {
 	display: grid;
+	width: fit-content;
 	flex-direction: row;
+	column-gap: 10px;
 	grid-template-columns: 60% auto;
-	justify-content: center;
+	justify-content: flex-start;
 }
 
 .EntryList {
 	list-style: none;
 }
 
+.EntryHeading-Container {
+	display: grid;
+	grid-template-columns: 2fr repeat(8, 1fr);
+	width: 100%;
+	gap: 30px;
+}
+
+.EntryHeading-Container h4 {
+	margin: 0;
+	padding: 4px 0;
+}
+
 h3 {
 	text-align: center;
+	width: fit-content;
 	color: #2d2f79;
+	margin: 0 auto;
+}
+
+.Placeholder {
+	width: 400px;
+	text-align: center;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 12px;
+	box-sizing: border-box;
+	margin: 0 auto;
 }
