@@ -49,15 +49,15 @@ app.use(express.json());
 
 app.use(passport.initialize());
 app.use((req, res, next) => {
-  console.log("Before passport.session - session ID:", req.sessionID);
+  // console.log("Before passport.session - session ID:", req.sessionID);
   next();
 });
 app.use(passport.session());
 
 //dummy express route 
 app.get('/debug-session', (req, res) => {
-  console.log("req.session", req.session);
-  console.log("req.session.passport", req.session?.passport);
+  // console.log("req.session", req.session);
+  // console.log("req.session.passport", req.session?.passport);
   res.json(req.session);
 });
 
@@ -77,9 +77,9 @@ app.post('/user/logout', (req, res) => {
 });
 
 app.get('/user/check-auth', (req, res) => {
-  console.log("SESSION ID:", req.sessionID);
-  console.log("SESSION DATA:", req.session);
-  console.log("USER:", req.user);
+  // console.log("SESSION ID:", req.sessionID);
+  // console.log("SESSION DATA:", req.session);
+  // console.log("USER:", req.user);
   if (req.isAuthenticated()) {
     res.json(req.user);
   } else {
@@ -95,8 +95,8 @@ app.post('/user/login', (req, res, next) => {
       if (err) return next(err);
 
       req.session.save(err => {
-        if (err) console.error("Error saving session:", err);
-        else console.log("Session saved successfully.");
+        // if (err) console.error("Error saving session:", err);
+        // else console.log("Session saved successfully.");
 
         return res.json({ message: 'Login successful', user });
       });
@@ -312,15 +312,15 @@ passport.serializeUser((user, cb) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  console.log("DESERIALIZING USER ID:", id);
+  // console.log("DESERIALIZING USER ID:", id);
   try {
     const result = await db.query("SELECT * FROM users WHERE id = $1 ", [id]);
     const user = result.rows[0];
     if (!user) {
-      console.log("No user found for ID:", id);
+      // console.log("No user found for ID:", id);
       return done(null, false);
     }
-    console.log("User found:", user.username);
+    // console.log("User found:", user.username);
     return done(null, user);
   } catch (err) {
     console.error("Error in deserializeUser:", err);
