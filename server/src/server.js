@@ -28,8 +28,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      sameSite: "none",
-      secure: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV == "production",
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24, //one day cookie (Might change to a week for use case)
     }
