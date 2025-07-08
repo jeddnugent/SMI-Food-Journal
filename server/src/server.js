@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import passport from "passport";
 import { Strategy } from "passport-local";
 import session from "express-session";
+import pgSession from "connect-pg-simple";
 import pool from "./db.js";
 
 // Add dynamic env assignment
@@ -22,8 +23,15 @@ app.use(cors({
   credentials: true
 }));
 
+const pgSessionStore = pgSession(session);
+const db = pool;
+
 app.use(
   session({
+    store: new pgSessionStore({
+      pool: db,
+      createTableIfMissing: true,
+    }),
     secret: process.env.SESSION_SECRET.toString(),
     resave: false,
     saveUninitialized: false,
@@ -41,8 +49,6 @@ app.use(express.json());
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-const db = pool;
 
 //dummy express route 
 
