@@ -36,7 +36,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      sameSite: "none",
+      sameSite: process.env.NODE_ENV == "production" ? "none" : "lax",
       secure: process.env.NODE_ENV == "production",
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24, //one day cookie (Might change to a week for use case)
@@ -293,13 +293,21 @@ passport.use(
 );
 
 passport.serializeUser((user, cb) => {
-  cb(null, user);
-});
-passport.deserializeUser((user, cb) => {
-  cb(null, user);
+  cb(null, user.id);
 });
 
-
+passport.deserializeUser(async (id, done) => {
+  try {
+    const result = await db.query("SELECT * FROM users WHERE id = $1 ", [
+      id,
+    ]);
+    const user = result.rows[0];
+    if (!user) return done(null, false);
+    return done(null, user);
+  } catch (err) {
+    return done(err);
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
