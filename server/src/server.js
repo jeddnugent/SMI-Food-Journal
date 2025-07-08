@@ -9,10 +9,10 @@ import session from "express-session";
 import pgSession from "connect-pg-simple";
 import pool from "./db.js";
 
-// Add dynamic env assignment
-dotnev.config({
-  path: `.env.development`
-});
+dotnev.config();
+if (!process.env.SESSION_SECRET) {
+  throw new Error("SESSION_SECRET is missing!");
+}
 
 const app = express();
 const PORT = process.env.PORT;
