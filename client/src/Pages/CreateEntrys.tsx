@@ -57,9 +57,9 @@ function CreateEntrys() {
 								? todayEntries.map((jorunalEntry: Entry, index) => (
 									<motion.li
 										key={index}
-										initial={{ opacity: 0, y: -10 }}
+										initial={{ opacity: 0, y: 10 }}
 										animate={{ opacity: 1, y: 0 }}
-										exit={{ opacity: 0, y: -10 }}
+										exit={{ opacity: 0, y: 10 }}
 										transition={{ duration: 0.3, delay: index * 0.05 }}
 									>
 										<EntryListItem
