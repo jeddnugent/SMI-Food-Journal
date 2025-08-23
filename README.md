@@ -26,7 +26,7 @@ The information gained by these surveys will be help inform futher advice and tr
   - React-Router (Client side page routing)
   - Vite (Dev tooling)
   - Axios (for API requests)
-  - Material UI and TailwindCSS (Styling Frameworks and some pre-built elements)
+  - Material UI (Styling Frameworks and some pre-built elements)
   - CSS (general styling)
   
 - [**Backend**](https://github.com/jeddnugent/SMI-Food-Journal/tree/main/server):
